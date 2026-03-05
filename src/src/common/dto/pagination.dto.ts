@@ -33,7 +33,8 @@ export class PaginationDto {
   limit?: number = 20;
 
   @ApiPropertyOptional({
-    description: 'Field to sort by',
+    description:
+      'Field to sort by (must be an alphanumeric string or underscore)',
     default: 'created_at',
   })
   @IsString()

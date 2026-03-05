@@ -2,12 +2,14 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { PaginationDto } from '../../common/dto/pagination.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -21,13 +23,11 @@ export class UsersService {
       throw new ConflictException('User with this email already exists');
     }
 
-    // In a real app we'd hash the password here if provided
-    // For now we just create the user as is
     const userPayload: Partial<CreateUserDto> & { password_hash?: string } = {
       ...createUserDto,
     };
     if (userPayload.password) {
-      userPayload.password_hash = `hashed_${userPayload.password}`;
+      userPayload.password_hash = await bcrypt.hash(userPayload.password, 10);
       delete userPayload.password;
     }
 
@@ -76,26 +76,38 @@ export class UsersService {
   async update(
     id: string,
     updateUserDto: UpdateUserDto,
+    currentUser: { sub: string; role: string },
   ): Promise<UserResponseDto> {
+    const isSelf = currentUser.sub === id;
+    const isAdmin =
+      currentUser.role === 'admin' || currentUser.role === 'super_admin';
+
+    if (!isSelf && !isAdmin) {
+      throw new UnauthorizedException('You can only update your own profile');
+    }
+
     const user = await this.usersRepository.findById(id);
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
-    if (updateUserDto.email && updateUserDto.email !== user.email) {
-      const emailTaken = await this.usersRepository.findByEmail(
-        updateUserDto.email,
-      );
+    const updates: Partial<UpdateUserDto> & { password_hash?: string } = {
+      ...updateUserDto,
+    };
+
+    if (updates.role && !isAdmin) {
+      throw new UnauthorizedException('Only admins can change roles');
+    }
+
+    if (updates.email && updates.email !== user.email) {
+      const emailTaken = await this.usersRepository.findByEmail(updates.email);
       if (emailTaken) {
         throw new ConflictException('Email is already in use');
       }
     }
 
-    const updates: Partial<UpdateUserDto> & { password_hash?: string } = {
-      ...updateUserDto,
-    };
     if (updates.password) {
-      updates.password_hash = `hashed_${updates.password}`;
+      updates.password_hash = await bcrypt.hash(updates.password, 10);
       delete updates.password;
     }
 

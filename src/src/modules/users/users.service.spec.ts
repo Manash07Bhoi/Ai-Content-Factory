@@ -1,7 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { UsersRepository } from './users.repository';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Role } from '../../common/enums/role.enum';
 import { User } from './entities/user.entity';
 
@@ -59,12 +63,11 @@ describe('UsersService', () => {
       });
 
       expect(mockRepo.create.mock.calls.length).toBe(1);
-      expect(mockRepo.create.mock.calls[0][0]).toEqual(
-        expect.objectContaining({
-          email: 'test@example.com',
-          password_hash: 'hashed_pw',
-        }),
-      );
+      const createCallArg = mockRepo.create.mock.calls[0][0];
+      expect(createCallArg.email).toBe('test@example.com');
+      expect(createCallArg.password_hash).toBeDefined();
+      expect(createCallArg.password_hash).not.toBe('pw');
+      expect((createCallArg as { password?: string }).password).toBeUndefined();
       expect(result.email).toBe(mockUser.email);
       expect(
         (result as unknown as { password_hash?: string }).password_hash,
@@ -101,9 +104,9 @@ describe('UsersService', () => {
   describe('update', () => {
     it('should throw NotFoundException if user not found', async () => {
       mockRepo.findById.mockResolvedValue(null);
-      await expect(service.update('missing', {})).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        service.update('missing', {}, { sub: 'missing', role: 'admin' }),
+      ).rejects.toThrow(NotFoundException);
     });
 
     it('should throw ConflictException if new email is taken', async () => {
@@ -111,8 +114,33 @@ describe('UsersService', () => {
       mockRepo.findByEmail.mockResolvedValue({ id: 'other-uuid', ...mockUser });
 
       await expect(
-        service.update('test-uuid', { email: 'other@example.com' }),
+        service.update(
+          'test-uuid',
+          { email: 'other@example.com' },
+          { sub: 'test-uuid', role: 'customer' },
+        ),
       ).rejects.toThrow(ConflictException);
+    });
+
+    it('should throw UnauthorizedException if user updates another profile', async () => {
+      await expect(
+        service.update(
+          'other-uuid',
+          {},
+          { sub: 'test-uuid', role: 'customer' },
+        ),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+
+    it('should throw UnauthorizedException if non-admin updates role', async () => {
+      mockRepo.findById.mockResolvedValue(mockUser);
+      await expect(
+        service.update(
+          'test-uuid',
+          { role: Role.ADMIN },
+          { sub: 'test-uuid', role: 'customer' },
+        ),
+      ).rejects.toThrow(UnauthorizedException);
     });
 
     it('should update and return user', async () => {
@@ -122,16 +150,20 @@ describe('UsersService', () => {
         role: Role.ADMIN,
       });
 
-      const result = await service.update('test-uuid', {
-        role: Role.ADMIN,
-        password: 'new_pw',
-      });
+      const result = await service.update(
+        'test-uuid',
+        { role: Role.ADMIN, password: 'new_pw' },
+        { sub: 'test-uuid', role: 'admin' },
+      );
 
       expect(mockRepo.update.mock.calls.length).toBe(1);
-      expect(mockRepo.update.mock.calls[0]).toEqual([
-        'test-uuid',
-        expect.objectContaining({ password_hash: 'hashed_new_pw' }),
-      ]);
+      const updateCallArgs = mockRepo.update.mock.calls[0];
+      expect(updateCallArgs[0]).toBe('test-uuid');
+      expect(updateCallArgs[1].password_hash).toBeDefined();
+      expect(updateCallArgs[1].password_hash).not.toBe('new_pw');
+      expect(
+        (updateCallArgs[1] as { password?: string }).password,
+      ).toBeUndefined();
       expect(result.role).toBe(Role.ADMIN);
     });
   });
