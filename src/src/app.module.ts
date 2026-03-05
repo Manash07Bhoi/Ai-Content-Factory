@@ -6,6 +6,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
 import { postgresConfig, mongoConfig } from './config/database.config';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { postgresConfig, mongoConfig } from './config/database.config';
         limit: 100,
       },
     ]),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
