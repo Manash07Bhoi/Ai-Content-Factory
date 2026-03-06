@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type PromptDocument = Prompt & Document;
+export type PosterDocument = Poster & Document;
 
 @Schema({ timestamps: true })
-export class Prompt {
+export class Poster {
   @Prop({ required: true })
   title: string;
 
@@ -43,4 +43,4 @@ export class Prompt {
   tags?: string[];
 }
 
-export const PromptSchema = SchemaFactory.createForClass(Prompt);
+export const PosterSchema = SchemaFactory.createForClass(Poster);

@@ -4,8 +4,9 @@ import { Job } from 'bullmq';
 import { QUEUES } from '../../common/constants/queues.constant';
 import { AiGeneratorService } from './ai-generator.service';
 
-export interface PromptGenerationJobData {
+export interface ContentGenerationJobData {
   batchId: string;
+  contentType: string; // prompts, scripts, posters, social
   topic: string;
   count: number;
 }
@@ -18,12 +19,12 @@ export class AiGeneratorProcessor extends WorkerHost {
     super();
   }
 
-  async process(job: Job<PromptGenerationJobData, void, string>): Promise<any> {
-    const { batchId, topic, count } = job.data;
-    this.logger.log(`Processing job ${job.id} for batch ${batchId}`);
+  async process(job: Job<ContentGenerationJobData, void, string>): Promise<any> {
+    const { batchId, contentType, topic, count } = job.data;
+    this.logger.log(`Processing job ${job.id} for batch ${batchId} (${contentType})`);
 
     try {
-      await this.aiGeneratorService.generatePromptsBatch(batchId, topic, count);
+      await this.aiGeneratorService.generateBatch(batchId, contentType, topic, count);
       this.logger.log(`Job ${job.id} completed successfully for batch ${batchId}`);
       return { success: true };
     } catch (error) {
