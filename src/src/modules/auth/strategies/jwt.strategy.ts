@@ -14,6 +14,8 @@ export interface JwtPayload {
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly configService: ConfigService) {
     const accessSecret = configService.get<string>('jwt.accessSecret');
+    if (!accessSecret) throw new Error('JWT_ACCESS_SECRET is not defined');
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,

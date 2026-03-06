@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
-import { authenticator } from 'otplib';
+const { authenticator } = require('otplib');
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -127,15 +127,18 @@ export class AuthService {
     const refreshPayload = { sub: userId, type: 'refresh' };
 
     const accessToken = this.jwtService.sign(accessPayload);
+    const refreshSecret = this.configService.get<string>('jwt.refreshSecret');
+    if (!refreshSecret) throw new Error('JWT_REFRESH_SECRET is not defined');
+
     const refreshToken = this.jwtService.sign(refreshPayload, {
-      secret: this.configService.get<string>('jwt.refreshSecret'),
-      expiresIn: this.configService.get<string>('jwt.refreshExpiresIn'),
+      secret: refreshSecret,
+      expiresIn: (this.configService.get<string>('jwt.refreshExpiresIn') || '7d') as any,
     });
 
     return {
       accessToken,
       refreshToken,
-      user: new UserResponseDto({ id: userId, email, role }),
+      user: new UserResponseDto({ id: userId, email, role: role as any }),
     };
   }
 }

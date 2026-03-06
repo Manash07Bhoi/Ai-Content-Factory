@@ -37,10 +37,23 @@ export default function SystemHealth() {
     );
   }
 
-  const status = health?.status || 'down';
+  const status = health?.status;
   const info = health?.info || {};
   const errData = health?.error || {};
   const allServices = { ...info, ...errData };
+
+  if (!status) {
+      return (
+      <div className="container mx-auto py-8">
+        <h1 className="text-3xl font-bold mb-6">System Health & Observability</h1>
+        <Card className="border-gray-200 bg-gray-50">
+          <CardContent className="pt-6 flex flex-col items-center justify-center min-h-[200px]">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">No health data available</h3>
+          </CardContent>
+        </Card>
+      </div>
+      );
+  }
 
   return (
     <div className="container mx-auto py-8">

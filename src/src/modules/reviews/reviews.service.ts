@@ -23,7 +23,7 @@ export class ReviewsService {
   }
 
   async addReview(userId: string, productId: string, rating: number, comment?: string) {
-    const product = await this.productsService.findOne(productId);
+    const product = await this.productsService.getProductById(productId);
     if (!product) {
       throw new NotFoundException('Product not found');
     }

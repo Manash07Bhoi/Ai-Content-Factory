@@ -21,7 +21,7 @@ export class WishlistsService {
   }
 
   async addProductToWishlist(userId: string, productId: string) {
-    const product = await this.productsService.findOne(productId);
+    const product = await this.productsService.getProductById(productId);
     if (!product) {
       throw new NotFoundException('Product not found');
     }

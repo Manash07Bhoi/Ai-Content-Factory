@@ -39,7 +39,23 @@ export default function TrendIntelligence() {
     );
   }
 
-  const data = trends?.data || [];
+  const data = trends?.data;
+
+  if (!data) {
+     return (
+      <div className="container mx-auto py-8">
+        <div className="flex items-center gap-3 mb-6">
+          <TrendingUp className="w-8 h-8 text-blue-600" />
+          <h1 className="text-3xl font-bold">Trend Intelligence Engine</h1>
+        </div>
+        <Card className="border-gray-200 bg-gray-50">
+          <CardContent className="pt-6 flex flex-col items-center justify-center min-h-[200px]">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">No trend signals available</h3>
+          </CardContent>
+        </Card>
+      </div>
+     );
+  }
 
   return (
     <div className="container mx-auto py-8">

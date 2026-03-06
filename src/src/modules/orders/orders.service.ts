@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order, OrderStatus } from './entities/order.entity';
@@ -105,5 +105,31 @@ export class OrdersService {
       where: { user: { id: userId } },
       order: { created_at: 'DESC' },
     });
+  }
+
+  async getAllOrders() {
+    return this.orderRepository.find({
+      order: { created_at: 'DESC' },
+    });
+  }
+
+  async refundOrder(orderId: string) {
+    const order = await this.orderRepository.findOne({ where: { id: orderId } });
+    if (!order) {
+      throw new NotFoundException(`Order with ID ${orderId} not found`);
+    }
+
+    if (order.status !== OrderStatus.PAID) {
+      throw new BadRequestException(`Order is not in paid status, cannot refund. Current status: ${order.status}`);
+    }
+
+    // Mock implementation for stripe refund
+    order.status = OrderStatus.REFUNDED;
+    await this.orderRepository.save(order);
+
+    return {
+      message: 'Order successfully refunded',
+      order,
+    };
   }
 }

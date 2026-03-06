@@ -18,4 +18,18 @@ export class DownloadsController {
     const url = await this.downloadsService.generateSignedUrl(productId, user.sub, ipAddress, userAgent);
     return { url };
   }
+
+  @Get('history')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.CUSTOMER, Role.REVIEWER, Role.ADMIN, Role.SUPER_ADMIN)
+  async getHistory(@CurrentUser() user: any) {
+    return this.downloadsService.getHistory(user.sub);
+  }
+
+  @Get('admin/list')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
+  async getAllDownloads() {
+    return this.downloadsService.getAllDownloads();
+  }
 }

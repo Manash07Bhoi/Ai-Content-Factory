@@ -71,4 +71,19 @@ export class DownloadsService {
     // Generate 15-minute signed URL
     return this.storageService.generateSignedUrl(product.file_url, 900);
   }
+
+  async getHistory(userId: string) {
+    return this.downloadRepository.find({
+      where: { user: { id: userId } },
+      relations: ['product', 'order'],
+      order: { last_downloaded_at: 'DESC' },
+    });
+  }
+
+  async getAllDownloads() {
+    return this.downloadRepository.find({
+      relations: ['product', 'order', 'user'],
+      order: { last_downloaded_at: 'DESC' },
+    });
+  }
 }

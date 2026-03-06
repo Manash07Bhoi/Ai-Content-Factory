@@ -17,12 +17,17 @@ import { UsersRepository } from '../users/users.repository';
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('jwt.accessSecret'),
-        signOptions: {
-          expiresIn: configService.get<string>('jwt.accessExpiresIn'),
-        },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const secret = configService.get<string>('jwt.accessSecret');
+        if (!secret) throw new Error('JWT_ACCESS_SECRET is not defined');
+
+        return {
+          secret,
+          signOptions: {
+            expiresIn: (configService.get<string>('jwt.accessExpiresIn') || '15m') as any,
+          },
+        };
+      },
     }),
   ],
   controllers: [AuthController],

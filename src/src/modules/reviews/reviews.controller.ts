@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Param, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ReviewsService } from './reviews.service';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RequestWithUser } from '../auth/interfaces/request-with-user.interface';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { IsNumber, IsString, IsOptional, Min, Max } from 'class-validator';
 
 export class CreateReviewDto {
@@ -32,10 +32,10 @@ export class ReviewsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Add a review to a product' })
   async addReview(
-    @Req() req: RequestWithUser,
+    @CurrentUser() user: any,
     @Param('productId') productId: string,
     @Body() createReviewDto: CreateReviewDto,
   ) {
-    return this.reviewsService.addReview(req.user.userId, productId, createReviewDto.rating, createReviewDto.comment);
+    return this.reviewsService.addReview(user.sub, productId, createReviewDto.rating, createReviewDto.comment);
   }
 }

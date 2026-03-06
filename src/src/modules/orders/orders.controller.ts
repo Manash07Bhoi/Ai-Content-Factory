@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, Headers, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body, Req, Headers, UseGuards, Get, Param } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { StripeService } from './stripe.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
@@ -52,5 +52,19 @@ export class OrdersController {
   @Roles(Role.CUSTOMER, Role.REVIEWER, Role.ADMIN, Role.SUPER_ADMIN)
   async getMyOrders(@CurrentUser() user: any) {
     return this.ordersService.getMyOrders(user.sub);
+  }
+
+  @Get('admin/list')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
+  async getAllOrders() {
+    return this.ordersService.getAllOrders();
+  }
+
+  @Post(':id/refund')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
+  async refundOrder(@Param('id') id: string) {
+    return this.ordersService.refundOrder(id);
   }
 }
