@@ -25,6 +25,7 @@ import { OrdersModule } from './modules/orders/orders.module';
 import { DownloadsModule } from './modules/downloads/downloads.module';
 import { AutomationModule } from './modules/automation/automation.module';
 import { SearchModule } from './modules/search/search.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { MarketingModule } from './modules/coupons/marketing.module';
 import { ExternalCommsModule } from './modules/affiliates/external-comms.module';
 import { AuditModule } from './modules/audit/audit.module';
@@ -37,6 +38,8 @@ import { RolesGuard } from './common/guards/roles.guard';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { BullBoardAuthMiddleware } from './common/middlewares/bull-board-auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -84,6 +87,7 @@ import { JwtModule } from '@nestjs/jwt';
     DownloadsModule,
     AutomationModule,
     SearchModule,
+    DashboardModule,
     MarketingModule,
     ExternalCommsModule,
     AuditModule,
@@ -92,6 +96,10 @@ import { JwtModule } from '@nestjs/jwt';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => configService.get('jwt') as any,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      exclude: ['/api/(.*)'],
     }),
   ],
   controllers: [AppController],

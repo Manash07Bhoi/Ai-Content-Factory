@@ -58,7 +58,20 @@ export default function AdminAffiliates() {
     );
   }
 
-  const items = affiliates?.data?.items || [];
+  const items = affiliates?.data?.items;
+
+  if (!items) {
+     return (
+      <div className="container mx-auto py-8">
+        <h1 className="text-3xl font-bold mb-6">Affiliate Management</h1>
+        <Card className="border-gray-200 bg-gray-50">
+          <CardContent className="pt-6 flex flex-col items-center justify-center min-h-[200px]">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">No affiliate data available</h3>
+          </CardContent>
+        </Card>
+      </div>
+     );
+  }
 
   return (
     <div className="container mx-auto py-8">
