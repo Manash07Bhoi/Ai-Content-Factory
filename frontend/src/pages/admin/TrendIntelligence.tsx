@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { api } from '../../lib/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ export default function TrendIntelligence() {
   const { data: trends, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['admin-trends'],
     queryFn: async () => {
-      const res = await axios.get('/api/v1/automation/trends');
+      const res = await api.get('/trends/signals');
       return res.data;
     },
     retry: 1,

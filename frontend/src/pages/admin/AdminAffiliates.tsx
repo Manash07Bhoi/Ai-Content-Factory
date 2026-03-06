@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { api } from '../../lib/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +11,7 @@ export default function AdminAffiliates() {
   const { data: affiliates, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['admin-affiliates'],
     queryFn: async () => {
-      const res = await axios.get('/api/v1/affiliates?limit=100');
+      const res = await api.get('/affiliates?limit=100');
       return res.data;
     },
     retry: 1,
@@ -19,7 +19,7 @@ export default function AdminAffiliates() {
 
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
-      await axios.patch(`/api/v1/affiliates/${id}/approve`);
+      await api.patch(`/affiliates/${id}/approve`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-affiliates'] });
@@ -29,7 +29,7 @@ export default function AdminAffiliates() {
 
   const rejectMutation = useMutation({
     mutationFn: async (id: string) => {
-      await axios.patch(`/api/v1/affiliates/${id}/reject`);
+      await api.patch(`/affiliates/${id}/reject`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-affiliates'] });

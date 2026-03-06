@@ -28,6 +28,8 @@ import { SearchModule } from './modules/search/search.module';
 import { MarketingModule } from './modules/coupons/marketing.module';
 import { ExternalCommsModule } from './modules/affiliates/external-comms.module';
 import { AuditModule } from './modules/audit/audit.module';
+import { WishlistsModule } from './modules/wishlists/wishlists.module';
+import { ReviewsModule } from './modules/reviews/reviews.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
@@ -85,6 +87,8 @@ import { JwtModule } from '@nestjs/jwt';
     MarketingModule,
     ExternalCommsModule,
     AuditModule,
+    WishlistsModule,
+    ReviewsModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => configService.get('jwt') as any,
