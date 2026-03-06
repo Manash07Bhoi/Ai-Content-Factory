@@ -19,8 +19,9 @@ export class PromptsService {
     const batchId = randomUUID();
 
     // Dispatch a job to generate prompts asynchronously
-    await this.aiGenerationQueue.add('generate-prompts', {
+    await this.aiGenerationQueue.add('generate-content', {
       batchId,
+      contentType: 'prompts',
       topic,
       count,
     });

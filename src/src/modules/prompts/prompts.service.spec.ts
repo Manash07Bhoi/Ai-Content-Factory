@@ -52,8 +52,9 @@ describe('PromptsService', () => {
 
     expect(result.batchId).toBe('mocked-uuid');
     expect(result.message).toBe('Generation started asynchronously');
-    expect(queue.add).toHaveBeenCalledWith('generate-prompts', {
+    expect(queue.add).toHaveBeenCalledWith('generate-content', {
       batchId: 'mocked-uuid',
+      contentType: 'prompts',
       topic: 'Cyberpunk',
       count: 5,
     });
