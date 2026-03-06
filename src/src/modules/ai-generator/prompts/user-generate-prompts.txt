@@ -1,0 +1,3 @@
+Generate exactly {{count}} highly detailed image prompts about the following topic: {{topic}}.
+
+The prompts should vary in artistic style, composition, lighting, and mood, but they must all remain strictly relevant to the topic. Output only JSON array.
