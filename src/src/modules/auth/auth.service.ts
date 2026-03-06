@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Logger, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -12,6 +12,8 @@ import { UserResponseDto } from '../users/dto/user-response.dto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly usersService: UsersService,
     private readonly usersRepository: UsersRepository,
@@ -119,7 +121,62 @@ export class AuthService {
   logout(_userId: string) {
     // For stateless JWT, logout is usually handled client-side by deleting tokens.
     // If using Redis for token blocklisting, we'd add the token to the blocklist here.
-    return { success: true };
+    return { message: 'Logged out successfully' };
+  }
+
+  async verifyEmail(token: string) {
+    try {
+      const payload = this.jwtService.verify(token) as unknown as { sub: string, type: string };
+      if (payload.type !== 'email_verify') {
+        throw new BadRequestException('Invalid token type');
+      }
+
+      const user = await this.usersRepository.findById(payload.sub);
+      if (!user) throw new BadRequestException('User not found');
+
+      await this.usersRepository.update(user.id, { email_verified: true });
+
+      return { message: 'Email successfully verified' };
+    } catch {
+      throw new BadRequestException('Invalid or expired verification token');
+    }
+  }
+
+  async forgotPassword(email: string) {
+    const user = await this.usersRepository.findByEmail(email);
+    if (!user) {
+      // Don't leak user existence
+      return { message: 'If that email is registered, a password reset link has been sent.' };
+    }
+
+    const resetToken = this.jwtService.sign(
+      { sub: user.id, type: 'password_reset' },
+      { expiresIn: '15m' }
+    );
+
+    // Simulate sending email
+    this.logger.log(`[Simulated Email] Password reset requested for ${user.email}. Token: ${resetToken}`);
+
+    return { message: 'If that email is registered, a password reset link has been sent.' };
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    try {
+      const payload = this.jwtService.verify(token) as unknown as { sub: string, type: string };
+      if (payload.type !== 'password_reset') {
+        throw new BadRequestException('Invalid token type');
+      }
+
+      const user = await this.usersRepository.findById(payload.sub);
+      if (!user) throw new BadRequestException('User not found');
+
+      const password_hash = await bcrypt.hash(newPassword, 12);
+      await this.usersRepository.update(user.id, { password_hash });
+
+      return { message: 'Password has been successfully reset' };
+    } catch {
+      throw new BadRequestException('Invalid or expired reset token');
+    }
   }
 
   private generateTokens(userId: string, email: string, role: string) {
@@ -132,7 +189,7 @@ export class AuthService {
 
     const refreshToken = this.jwtService.sign(refreshPayload, {
       secret: refreshSecret,
-      expiresIn: (this.configService.get<string>('jwt.refreshExpiresIn') || '7d') as any,
+      expiresIn: this.configService.get<string>('jwt.refreshExpiresIn') as any,
     });
 
     return {

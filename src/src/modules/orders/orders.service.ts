@@ -123,7 +123,13 @@ export class OrdersService {
       throw new BadRequestException(`Order is not in paid status, cannot refund. Current status: ${order.status}`);
     }
 
-    // Mock implementation for stripe refund
+    if (!order.stripe_payment_intent_id) {
+      throw new BadRequestException(`Order has no Stripe payment intent ID.`);
+    }
+
+    // Call stripe service to actually issue the refund
+    await this.stripeService.issueRefund(order.stripe_payment_intent_id);
+
     order.status = OrderStatus.REFUNDED;
     await this.orderRepository.save(order);
 

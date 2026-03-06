@@ -24,8 +24,7 @@ COPY --from=backend-build /app/src/node_modules ./node_modules
 COPY --from=backend-build /app/src/package*.json ./
 
 # Serve the static frontend build by copying it to the public directory
-# Assuming NestJS ServeStaticModule is or will be configured to serve from 'public'
-COPY --from=frontend-build /app/frontend/dist ./public
+COPY --from=frontend-build /app/frontend/dist ./dist/public
 
 # Expose port and start
 EXPOSE 3000

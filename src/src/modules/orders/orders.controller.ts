@@ -2,6 +2,7 @@ import { Controller, Post, Body, Req, Headers, UseGuards, Get, Param } from '@ne
 import { OrdersService } from './orders.service';
 import { StripeService } from './stripe.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { Role } from '../../common/enums/role.enum';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
@@ -11,6 +12,7 @@ export class CheckoutDto {
   productIds: string[];
 }
 
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('orders')
 export class OrdersController {
   constructor(
@@ -19,7 +21,6 @@ export class OrdersController {
   ) {}
 
   @Post('checkout')
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.CUSTOMER, Role.REVIEWER, Role.ADMIN, Role.SUPER_ADMIN)
   async checkout(@Body() dto: CheckoutDto, @CurrentUser() user: any) {
     return this.ordersService.createCheckout(user.sub, user.email, dto.productIds);
@@ -48,21 +49,18 @@ export class OrdersController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.CUSTOMER, Role.REVIEWER, Role.ADMIN, Role.SUPER_ADMIN)
   async getMyOrders(@CurrentUser() user: any) {
     return this.ordersService.getMyOrders(user.sub);
   }
 
   @Get('admin/list')
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN, Role.SUPER_ADMIN)
   async getAllOrders() {
     return this.ordersService.getAllOrders();
   }
 
   @Post(':id/refund')
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN, Role.SUPER_ADMIN)
   async refundOrder(@Param('id') id: string) {
     return this.ordersService.refundOrder(id);

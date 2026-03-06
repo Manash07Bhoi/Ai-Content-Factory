@@ -35,6 +35,12 @@ export class User {
   @Column({ type: 'varchar', length: 255, nullable: true })
   two_factor_secret: string;
 
+  @Column({ type: 'boolean', default: false })
+  email_verified: boolean;
+
+  @Column({ type: 'boolean', default: true })
+  is_active: boolean;
+
   @CreateDateColumn({ type: 'timestamptz' })
   created_at: Date;
 

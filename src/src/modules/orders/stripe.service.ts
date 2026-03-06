@@ -53,6 +53,23 @@ export class StripeService {
     return this.stripe!.webhooks.constructEvent(payload, signature, webhookSecret);
   }
 
+  async issueRefund(paymentIntentId: string): Promise<Stripe.Refund | { id: string, status: string }> {
+    if (this.shouldUseFallback()) {
+      this.logger.debug(`Mock issueRefund for payment intent ${paymentIntentId}`);
+      return { id: `re_mock_${Date.now()}`, status: 'succeeded' };
+    }
+
+    try {
+      const refund = await this.stripe!.refunds.create({
+        payment_intent: paymentIntentId,
+      });
+      return refund;
+    } catch (error) {
+      this.logger.error(`Stripe error issuing refund: ${error.message}`);
+      throw error;
+    }
+  }
+
   private shouldUseFallback(): boolean {
     return !this.stripe;
   }

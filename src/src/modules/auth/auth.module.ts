@@ -24,7 +24,7 @@ import { UsersRepository } from '../users/users.repository';
         return {
           secret,
           signOptions: {
-            expiresIn: (configService.get<string>('jwt.accessExpiresIn') || '15m') as any,
+            expiresIn: configService.get<string>('jwt.accessExpiresIn') as any,
           },
         };
       },
