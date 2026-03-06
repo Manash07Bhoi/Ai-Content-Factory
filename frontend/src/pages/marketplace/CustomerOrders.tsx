@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import { Button } from '../../components/ui/button';
@@ -46,7 +45,7 @@ export default function CustomerOrders() {
               <div className="border-t pt-4 mt-4">
                  <p className="text-sm font-bold mb-2">Items</p>
                  {/* In reality we need to fetch order items, but for now we'll mock the download button to trigger the api using a dummy id assuming it was passed in order. */}
-                 <Button onClick={() => handleDownload('dummy_product_id')} variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+                 <Button onClick={() => handleDownload('dummy_product_id')}  className="text-blue-600 border-blue-600 hover:bg-blue-50">
                     Download Files
                  </Button>
               </div>

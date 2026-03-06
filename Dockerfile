@@ -1,34 +1,32 @@
-# Stage 1: Build Backend
+# Stage 1: Build the NestJS backend
 FROM node:20-alpine AS backend-build
-WORKDIR /app
+WORKDIR /app/src
 COPY src/package*.json ./
 RUN npm ci
-COPY src/ .
+COPY src/ ./
 RUN npm run build
 
-# Stage 2: Build Frontend
+# Stage 2: Build the React frontend
 FROM node:20-alpine AS frontend-build
-WORKDIR /app
+WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm ci
-COPY frontend/ .
+COPY frontend/ ./
+# We can provide a build argument or default URL for the production API
+ENV VITE_API_URL=/api/v1
 RUN npm run build
 
-# Stage 3: Production Server
+# Stage 3: Production Image
 FROM node:20-alpine
-WORKDIR /app
+WORKDIR /app/src
+COPY --from=backend-build /app/src/dist ./dist
+COPY --from=backend-build /app/src/node_modules ./node_modules
+COPY --from=backend-build /app/src/package*.json ./
 
-# Copy Backend Build
-COPY --from=backend-build /app/dist ./dist
-COPY --from=backend-build /app/node_modules ./node_modules
-COPY --from=backend-build /app/package.json ./
+# Serve the static frontend build by copying it to the public directory
+# Assuming NestJS ServeStaticModule is or will be configured to serve from 'public'
+COPY --from=frontend-build /app/frontend/dist ./public
 
-# Serve static frontend with NestJS (or assume Nginx ingress in production cluster)
-# For simplicity in this monorepo, we place frontend inside a public folder served by NestJS
-COPY --from=frontend-build /app/dist ./public
-
+# Expose port and start
 EXPOSE 3000
-
-ENV NODE_ENV=production
-
-CMD ["node", "dist/main.js"]
+CMD ["npm", "run", "start:prod"]
