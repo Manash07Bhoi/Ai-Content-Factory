@@ -19,6 +19,10 @@ import { PromptsModule } from './modules/prompts/prompts.module';
 import { CategorisationModule } from './modules/categorisation/categorisation.module';
 import { ApprovalsModule } from './modules/approvals/approvals.module';
 import { StorageModule } from './modules/storage/storage.module';
+import { ProductsModule } from './modules/products/products.module';
+import { ProductBuilderModule } from './modules/product-builder/product-builder.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import { DownloadsModule } from './modules/downloads/downloads.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
@@ -67,6 +71,10 @@ import { JwtModule } from '@nestjs/jwt';
     CategorisationModule,
     ApprovalsModule,
     StorageModule,
+    ProductsModule,
+    ProductBuilderModule,
+    OrdersModule,
+    DownloadsModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => configService.get('jwt') as any,
