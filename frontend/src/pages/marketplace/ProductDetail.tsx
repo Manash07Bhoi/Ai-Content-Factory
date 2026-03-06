@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import { Button } from '../../components/ui/button';
+import ProductReviews from './ProductReviews';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -64,6 +65,8 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      <ProductReviews productId={product.id} />
     </div>
   );
 }

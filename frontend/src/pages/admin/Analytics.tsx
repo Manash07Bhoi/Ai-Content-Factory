@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { api } from '../../lib/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, RefreshCw } from 'lucide-react';
@@ -8,7 +8,7 @@ export default function Analytics() {
   const { data: stats, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['admin-analytics'],
     queryFn: async () => {
-      const res = await axios.get('/api/v1/analytics/revenue');
+      const res = await api.get('/analytics');
       return res.data;
     },
     retry: 1,

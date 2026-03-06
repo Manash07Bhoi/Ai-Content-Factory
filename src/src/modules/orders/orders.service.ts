@@ -74,6 +74,18 @@ export class OrdersService {
     };
   }
 
+  async hasUserPurchasedProduct(userId: string, productId: string): Promise<boolean> {
+    const count = await this.orderRepository
+      .createQueryBuilder('order')
+      .innerJoin('order.items', 'item')
+      .where('order.user_id = :userId', { userId })
+      .andWhere('item.product_id = :productId', { productId })
+      .andWhere('order.status = :status', { status: OrderStatus.PAID })
+      .getCount();
+
+    return count > 0;
+  }
+
   async markAsPaid(paymentIntentId: string, chargeId?: string) {
     const order = await this.orderRepository.findOne({ where: { stripe_payment_intent_id: paymentIntentId }});
     if (!order) {

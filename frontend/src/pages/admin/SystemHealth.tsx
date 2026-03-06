@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { api } from '../../lib/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ export default function SystemHealth() {
   const { data: health, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['system-health'],
     queryFn: async () => {
-      const res = await axios.get('/api/v1/health');
+      const res = await api.get('/health');
       return res.data;
     },
     refetchInterval: 10000,
