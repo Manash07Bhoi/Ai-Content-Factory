@@ -12,10 +12,25 @@ export class AutoApprovalDecision {
   contentId: string;
 
   @Prop({ required: true })
+  contentType: string;
+
+  @Prop({ required: true })
   decision: string; // 'auto_approved', 'auto_rejected', 'queued_for_review'
 
   @Prop()
   confidenceScore: number;
+
+  @Prop()
+  predictedLabel: string;
+
+  @Prop({ type: Object })
+  featureVector: Record<string, any>;
+
+  @Prop()
+  modelVersion: string;
+
+  @Prop()
+  wasSpotChecked: boolean;
 }
 
 export const AutoApprovalDecisionSchema = SchemaFactory.createForClass(AutoApprovalDecision);

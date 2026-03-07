@@ -45,6 +45,24 @@ export class LLMClientService {
     }
   }
 
+  async generateEmbedding(text: string): Promise<number[]> {
+    if (this.shouldUseFallback('openai')) {
+      this.logger.debug('Mocking embedding generation (1536 dims)');
+      return new Array(1536).fill(0).map(() => Math.random() * 2 - 1);
+    }
+
+    try {
+      const response = await this.openai!.embeddings.create({
+        model: 'text-embedding-3-small',
+        input: text,
+      });
+      return response.data[0].embedding;
+    } catch (error) {
+      this.logger.error(`OpenAI Embedding error: ${error.message}`);
+      throw error;
+    }
+  }
+
   async generate(params: GenerateParams): Promise<GenerateResult> {
     if (this.shouldUseFallback(params.provider)) {
       return this.generateMock(params);

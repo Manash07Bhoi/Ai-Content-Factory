@@ -10,6 +10,12 @@ export class ContentEmbedding {
   @Column({ type: 'varchar', length: 255 })
   content_id: string;
 
+  @Column({ type: 'varchar', length: 255 })
+  content_type: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  category: string;
+
   // We map vector to a standard JSON or text array here so NestJS starts without complex pgvector ORM setups
   // A real implementation would use: @Column({ type: 'vector', length: 1536 })
   @Column({ type: 'jsonb', nullable: true })
