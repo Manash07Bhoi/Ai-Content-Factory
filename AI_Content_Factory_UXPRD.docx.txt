@@ -1,0 +1,2032 @@
+﻿AI Content Factory — UI/UX Design PRD  |  DESIGN SYSTEM v1.0.0
+
+
+UI / UX DESIGN PRD
+AI Content Factory
+Complete Design System · All 20+ Screens · Mobile · Tablet · Desktop · 4K
+Premium 2026 Enterprise UI/UX Specification
+
+
+Design System Version
+	v1.0.0 — 2026 Edition
+	Visual Language
+	Dark-first · Glassmorphic · Fluid · Minimal Maximalism
+	Breakpoints
+	320px · 768px · 1024px · 1280px · 1440px · 1920px · 2560px+
+	Primary Font
+	Inter Variable (Display) + JetBrains Mono (Code)
+	Colour Mode
+	Dark Mode Primary · Light Mode Full Parity
+	Accessibility
+	WCAG 2.2 AAA · ARIA Complete · Keyboard-first
+	Motion Standard
+	60fps · Framer Motion spring physics · prefers-reduced-motion respected
+	Total Screens Specified
+	20 Admin/Staff · 8 Customer · Full State Coverage
+	
+
+________________
+
+
+Table of Contents
+
+
+
+
+________________
+
+
+1. Executive Summary & UX Vision
+AI Content Factory is a dual-surface platform: a high-throughput content operations tool for internal staff, and a premium digital product marketplace for creative professionals. The UX design must simultaneously feel like an enterprise command centre — powerful, dense with information, always in control — and like a luxury creative marketplace — aspirational, tactile, effortlessly beautiful. These two surfaces share a design system but express it differently: the admin surface is dark, data-rich, and operationally focused; the marketplace is cinematic, product-centred, and conversion-optimised.
+The emotional promise: Every person who touches this product — whether an admin triggering a generation batch at 2am or a designer browsing prompt packs on mobile — should feel like they are operating the most sophisticated tool in their category. Nothing should feel accidental. Every interaction should feel inevitable.
+
+
+1.1 Design Pillars
+Pillar
+	Admin Surface Expression
+	Marketplace Expression
+	Authority
+	Dense data grids, real-time counters, cinematic dark chrome
+	Social proof, sales numbers, verified badges, expert curation
+	Clarity
+	Progressive disclosure, collapsible panels, contextual help
+	Single-focus product cards, clean whitespace, guided checkout
+	Momentum
+	One-click actions, bulk operations, keyboard shortcuts visible
+	Frictionless add-to-cart, instant search, 1-page checkout
+	Delight
+	Animated generation counters, approval streak badges, live feed
+	Animated pack previews, purchase confetti, download progress
+	Trust
+	Audit trails visible, reviewer attribution, system health indicator
+	Verified purchase badges, license clarity, secure payment badges
+	
+
+1.2 Core UX Metrics Targets
+Metric
+	Target
+	Design Mechanism
+	Admin review throughput
+	+60% vs baseline
+	Keyboard shortcuts, bulk actions, side-by-side preview
+	Marketplace conversion rate
+	≥ 3.5%
+	Social proof, preview files, frictionless checkout
+	Time to first generation
+	< 90 seconds after login
+	Onboarding checklist, prominent CTA on empty state
+	Mobile checkout completion
+	≥ 78%
+	Apple/Google Pay, sticky buy button, minimal form fields
+	Lighthouse Performance
+	≥ 95
+	Lazy load, skeleton screens, virtual lists, WebP/AVIF images
+	Lighthouse Accessibility
+	100
+	WCAG AAA, full ARIA, keyboard navigation, focus rings
+	________________
+
+
+2. Design System Foundations
+The design system is token-first. Every value used in the UI — colour, spacing, radius, shadow, motion duration — is a named token. This ensures perfect consistency across the React component library, makes theme switching (dark ↔ light) a single CSS variable swap, and gives engineers a single source of truth.
+
+
+2.1 Colour System
+2.1.1 Brand Palette — OKLCH + Hex
+Token Name
+	Light Mode
+	Dark Mode
+	OKLCH
+	Usage
+	--color-brand-50
+	#F5F3FF
+	#1E1B4B
+	oklch(97% 0.02 292)
+	Tint backgrounds, hover states
+	--color-brand-100
+	#EDE9FE
+	#2E1065
+	oklch(93% 0.06 292)
+	Subtle fills, badge backgrounds
+	--color-brand-300
+	#C4B5FD
+	#5B21B6
+	oklch(77% 0.15 292)
+	Secondary accents, borders
+	--color-brand-500
+	#8B5CF6
+	#7C3AED
+	oklch(60% 0.23 292)
+	Interactive elements, links
+	--color-brand-700
+	#6D28D9
+	#4C1D95
+	oklch(45% 0.25 292)
+	Primary buttons, active states
+	--color-brand-900
+	#2E1065
+	#EDE9FE
+	oklch(20% 0.15 292)
+	Display text (dark mode: inverted)
+	
+
+Token Name
+	Hex (Base)
+	OKLCH
+	Usage
+	--color-accent
+	#06B6D4
+	oklch(72% 0.18 205)
+	Cyan — data highlights, live indicators, success actions
+	--color-success
+	#10B981
+	oklch(68% 0.18 160)
+	Approved states, positive trends, download success
+	--color-warning
+	#F59E0B
+	oklch(75% 0.18 80)
+	Pending review, price changes, system warnings
+	--color-danger
+	#EF4444
+	oklch(60% 0.22 25)
+	Rejection, error states, destructive actions
+	--color-info
+	#3B82F6
+	oklch(60% 0.20 260)
+	Informational tooltips, help text, neutral actions
+	--color-surface-0
+	#0F0F1A
+	oklch(8% 0.02 292)
+	DARK: Page background
+	--color-surface-1
+	#161625
+	oklch(12% 0.03 292)
+	DARK: Card/panel background
+	--color-surface-2
+	#1E1B4B
+	oklch(16% 0.06 292)
+	DARK: Elevated surfaces, modals
+	--color-surface-3
+	#2D2B5A
+	oklch(22% 0.08 292)
+	DARK: Hover states, selected rows
+	--color-border
+	#312E81
+	oklch(26% 0.12 292)
+	DARK: All borders and dividers
+	
+
+2.1.2 Semantic Colour Tokens — Full Mapping
+Semantic Token
+	Light Value
+	Dark Value
+	Applied To
+	--text-primary
+	#111827
+	#F9FAFB
+	Body text, headings, table data
+	--text-secondary
+	#6B7280
+	#9CA3AF
+	Labels, captions, placeholder text
+	--text-tertiary
+	#9CA3AF
+	#6B7280
+	Disabled states, metadata
+	--text-on-brand
+	#FFFFFF
+	#FFFFFF
+	Text on brand-coloured backgrounds
+	--text-link
+	#7C3AED
+	#A78BFA
+	Hyperlinks, CTA text links
+	--bg-page
+	#F9FAFB
+	#0F0F1A
+	Root page background
+	--bg-card
+	#FFFFFF
+	#161625
+	Card, panel, dropdown backgrounds
+	--bg-elevated
+	#FFFFFF
+	#1E1B4B
+	Modal overlays, popover surfaces
+	--bg-input
+	#F3F4F6
+	#1E1B4B
+	Form input fields
+	--border-default
+	#E5E7EB
+	#312E81
+	Standard dividers, card borders
+	--border-focus
+	#7C3AED
+	#8B5CF6
+	Focus rings on interactive elements
+	--shadow-sm
+	0 1px 3px rgba(0,0,0,0.1)
+	0 1px 3px rgba(0,0,0,0.4)
+	Cards, badges
+	--shadow-md
+	0 4px 16px rgba(0,0,0,0.08)
+	0 4px 24px rgba(91,33,182,0.25)
+	Dropdowns, tooltips
+	--shadow-lg
+	0 8px 32px rgba(0,0,0,0.12)
+	0 8px 48px rgba(91,33,182,0.35)
+	Modals, command palette
+	--shadow-glow-brand
+	—
+	0 0 24px rgba(139,92,246,0.4)
+	DARK: Active nav item, selected cards
+	
+
+2.2 Typography System
+Two fonts serve the entire system. Inter Variable is used for all UI text due to its optical precision at small sizes, its extensive weight range (100–900 variable), and its superior number rendering for data-heavy interfaces. JetBrains Mono is used exclusively for code blocks, prompt text previews, API keys, and technical identifiers — its ligature support and generous x-height make long prompt strings scannable.
+Scale Token
+	Size (rem)
+	Size (px)
+	Weight
+	Line Height
+	Letter Spacing
+	Usage
+	--text-xs
+	0.75rem
+	12px
+	400
+	1.5
+	+0.02em
+	Captions, badges, metadata
+	--text-sm
+	0.875rem
+	14px
+	400
+	1.5
+	+0.01em
+	Labels, table cells, secondary info
+	--text-base
+	1rem
+	16px
+	400
+	1.6
+	0
+	Body text, form inputs, descriptions
+	--text-md
+	1.125rem
+	18px
+	500
+	1.5
+	-0.01em
+	Card titles, nav items, form labels
+	--text-lg
+	1.25rem
+	20px
+	600
+	1.4
+	-0.01em
+	Section headings, modal titles
+	--text-xl
+	1.5rem
+	24px
+	600
+	1.3
+	-0.02em
+	Page headings (sub-level)
+	--text-2xl
+	1.875rem
+	30px
+	700
+	1.25
+	-0.02em
+	KPI values, primary page titles
+	--text-3xl
+	2.25rem
+	36px
+	700
+	1.2
+	-0.03em
+	Hero headings, onboarding titles
+	--text-4xl
+	3rem
+	48px
+	800
+	1.1
+	-0.04em
+	Marketing hero, splash screens
+	--text-display
+	4.5rem
+	72px
+	900
+	1.0
+	-0.05em
+	Cover page, 404 page, key landing numbers
+	
+
+🔤  Variable Font Usage
+Inter Variable allows intermediate weights (e.g., font-weight: 550 for a 'semi-semibold' that sits between the standard 500 and 600 stops). Use this for KPI card values to give them visual distinction without jumping to full bold. Declare @font-face with font-weight: 100 900 to activate the variable axis.
+	
+
+2.3 Spacing & Layout Grid
+The spacing system is based on a 4px fundamental unit. All spacing values are multiples of 4px. The layout grid uses 12 columns on desktop, 8 columns on tablet, and 4 columns on mobile, with gutters that scale with viewport width.
+Token
+	Value
+	Common Usage
+	--space-1
+	4px
+	Icon internal padding, between badge icon and label
+	--space-2
+	8px
+	Input internal horizontal padding, tight component gaps
+	--space-3
+	12px
+	Card internal top/bottom padding, list item gaps
+	--space-4
+	16px
+	Standard component padding, form field gaps
+	--space-5
+	20px
+	Card padding (default), nav item padding
+	--space-6
+	24px
+	Section internal padding, modal padding
+	--space-8
+	32px
+	Between major sections within a page
+	--space-10
+	40px
+	Page section gaps, dashboard widget margins
+	--space-12
+	48px
+	Between page-level sections
+	--space-16
+	64px
+	Hero sections, major vertical rhythm breaks
+	--space-20
+	80px
+	Full-page section padding on desktop
+	
+
+Breakpoint
+	Grid Columns
+	Gutter
+	Margin
+	Container Max Width
+	xs — 320px
+	4
+	16px
+	16px
+	100%
+	sm — 640px
+	4
+	20px
+	20px
+	100%
+	md — 768px
+	8
+	24px
+	24px
+	100%
+	lg — 1024px
+	12
+	24px
+	32px
+	100%
+	xl — 1280px
+	12
+	32px
+	40px
+	1240px
+	2xl — 1536px
+	12
+	32px
+	48px
+	1440px
+	3xl — 1920px
+	12
+	40px
+	80px
+	1600px
+	4K — 2560px+
+	12
+	48px
+	120px
+	1920px
+	
+
+2.4 Border Radius System
+Token
+	Value
+	Applied To
+	--radius-xs
+	2px
+	Badges, code tokens, tight labels
+	--radius-sm
+	4px
+	Buttons (secondary), input fields, chips
+	--radius-md
+	8px
+	Cards, dropdowns, tooltips, modals (inner sections)
+	--radius-lg
+	12px
+	Primary cards, panel containers, image thumbnails
+	--radius-xl
+	16px
+	Modal dialogs, drawer panels, floating menus
+	--radius-2xl
+	24px
+	Large product cards, feature highlight boxes
+	--radius-full
+	9999px
+	Pill badges, avatar circles, toggle switches, FAB
+	
+
+2.5 Elevation & Shadow System
+Level
+	CSS Shadow (Dark Mode)
+	Applied To
+	Level 0 — Flat
+	none
+	Inline elements, table rows
+	Level 1 — Raised
+	0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(139,92,246,0.08)
+	Cards, nav items
+	Level 2 — Float
+	0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.12)
+	Dropdowns, popovers
+	Level 3 — Overlay
+	0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.16)
+	Modals, command palette
+	Level 4 — Glow
+	0 0 0 1px #8B5CF6, 0 0 24px rgba(139,92,246,0.4)
+	Active/selected cards, focused inputs
+	Level 5 — Cinematic
+	0 20px 60px rgba(0,0,0,0.7), 0 0 80px rgba(139,92,246,0.15)
+	Hero elements, featured product cards
+	
+
+2.6 Motion & Animation System
+All animations respect the prefers-reduced-motion media query. When reduced motion is preferred, transitions are replaced with instant state changes (opacity cross-fades only, no transforms). Motion is purposeful — it communicates cause-and-effect relationships, confirms actions, and guides attention. It is never decorative noise.
+Token
+	Duration
+	Easing
+	Applied To
+	--motion-instant
+	50ms
+	linear
+	Hover states, active press feedback
+	--motion-fast
+	150ms
+	cubic-bezier(0.16,1,0.3,1)
+	Icon swaps, badge updates, checkbox toggles
+	--motion-normal
+	250ms
+	cubic-bezier(0.16,1,0.3,1)
+	Dropdown open/close, tab switches, tooltip appear
+	--motion-smooth
+	350ms
+	cubic-bezier(0.16,1,0.3,1)
+	Modal enter, drawer slide, page transitions
+	--motion-deliberate
+	500ms
+	cubic-bezier(0.34,1.56,0.64,1)
+	Spring: card expand, number counter, confetti
+	--motion-slow
+	700ms
+	cubic-bezier(0.16,1,0.3,1)
+	Onboarding step transitions, full-page modals
+	--motion-spring
+	600ms
+	spring(1, 100, 10, 0)
+	Framer Motion: sidebar, accordions, list reorder
+	
+
+2.7 Core Component Specifications
+2.7.1 Button System
+Variant
+	Default State
+	Hover State
+	Active State
+	Disabled State
+	Primary
+	bg-brand-700, white text, shadow-md
+	bg-brand-500, scale(1.02), shadow-glow-brand
+	bg-brand-900, scale(0.98)
+	opacity-40, cursor-not-allowed
+	Secondary
+	transparent, brand-300 border + text
+	bg-brand-50/10, border-brand-500
+	bg-brand-100/20, scale(0.98)
+	opacity-40
+	Ghost
+	transparent, secondary text
+	bg-surface-3, primary text
+	bg-surface-3 darker, scale(0.98)
+	opacity-40
+	Danger
+	bg-danger, white text
+	bg-danger/80, scale(1.02)
+	bg-danger/90, scale(0.98)
+	opacity-40
+	Success
+	bg-success, white text
+	bg-success/80, scale(1.02)
+	bg-success/90, scale(0.98)
+	opacity-40
+	Icon
+	ghost variant + 40×40px, radius-full
+	bg-surface-3, scale(1.05)
+	scale(0.95)
+	opacity-40
+	
+
+Button sizes: xs (28px height, text-xs), sm (32px, text-sm), md (40px, text-base — default), lg (48px, text-md), xl (56px, text-lg). All buttons have 8px horizontal padding multiplier relative to height.
+
+
+2.7.2 Input Fields
+State
+	Visual Treatment
+	Default
+	bg-surface-1, border-default 1px, radius-md, text-primary placeholder text-tertiary. Height 40px (md), 36px (sm), 48px (lg).
+	Focus
+	border-focus 2px (brand-500), shadow Level 4 (glow), label animates up to floating position at text-xs weight-500
+	Filled
+	border-brand-300, bg-surface-2. Floating label stays up. Clear (×) button appears if clearable prop.
+	Error
+	border-danger 2px, error message below in text-danger text-sm. Shake animation (keyframe, 3 oscillations, 300ms total).
+	Success
+	border-success 2px, green checkmark icon appended inside field.
+	Disabled
+	bg-surface-0, opacity-50, cursor-not-allowed, no hover/focus effects.
+	Read-only
+	bg-transparent, dashed border-default, cursor-default. Visually distinct from disabled.
+	
+
+2.7.3 Badge & Status Chip System
+Type
+	Appearance
+	Animation
+	Status: Pending
+	amber bg/text, circle pulse dot (live animation 2s infinite)
+	Dot pulses opacity 1→0.4→1
+	Status: Approved
+	emerald bg/text, static checkmark icon
+	Count-up on first render
+	Status: Auto-approved
+	cyan bg/text, lightning bolt icon
+	Brief glow flash on appear
+	Status: Rejected
+	red bg/text, ✕ icon
+	Subtle shake on appear
+	Status: In Product
+	brand bg/text, package icon
+	None
+	Status: Published
+	green bg/text, globe icon
+	None
+	Status: Draft
+	gray bg/text, pencil icon
+	None
+	Count badge (nav/bell)
+	brand-700 bg, white text, radius-full, 18px min-width
+	Scale bounce 1.0→1.3→1.0 on new count
+	New / Hot tag
+	gradient brand→accent, white text, radius-xs, uppercase
+	Subtle shimmer animation 3s
+	Sale badge
+	danger bg, white text bold, slight rotation -2deg
+	None
+	
+
+2.7.4 Card System
+Card Type
+	Structure & Visual Treatment
+	KPI Card (Admin)
+	bg-surface-1, border Level 1, radius-lg. Icon in brand-100 circle (top-left). Value in text-2xl variable weight. Label text-sm text-secondary. Trend pill bottom-right (green/red arrow + %). Hover: Level 4 glow shadow, scale(1.01).
+	Content Item Card
+	bg-surface-1, radius-lg, border Level 1. Type icon + category badge top row. Text preview truncated 2 lines. Quality score progress bar. Status badge bottom-right. Actions (approve/reject) appear on hover as overlay bar with 200ms opacity transition.
+	Product Card (Market)
+	Aspect ratio 4:3 thumbnail (object-cover, radius-lg top). Type badge overlaid bottom-left on thumbnail. Title text-md weight-600. Price text-lg weight-700 brand. Item count chip. Purchase count subtle. Hover: thumbnail scales 1.04 (overflow hidden), shadow Level 5, 'Preview' pill slides up from bottom.
+	Order Row Card
+	Horizontal layout. Order number monospace. Status badge. Product thumbnails (stacked, 28px circles). Total bold. Date text-secondary. Action icons right-aligned. Hover: bg-surface-3 row highlight.
+	Bundle Card
+	Same as Product Card but with 3 overlapping thumbnail squares (CSS grid stagger). 'Bundle' label. Savings badge 'Save 25%' in success colour. More prominent price display showing strikethrough original.
+	Reviewer Stat Card
+	Compact horizontal. Avatar + name. Today/week counts. Mini bar chart. Streak badge if ≥7 days. Rank number far left in large muted text.
+	________________
+
+
+3. User Flow Diagrams
+3.1 Admin / Staff Master Flow
+[ App Load ]
+      │
+      ▼
+[ /auth/login ] ──── (has 2FA?) ──── YES ──→ [ /auth/2fa ] ──→ (valid?) ──→ NO → error + retry
+      │                                                                ↓
+      │ (no 2FA)                                                      YES
+      └──────────────────────────────────────────────────────────────→ ↓
+                                                                 [ /admin/dashboard ]
+                                                                        │
+                    ┌───────────────────────────────────────────────────┤
+                    │                   │                   │           │
+                    ▼                   ▼                   ▼           ▼
+            [ /admin/generator ] [ /admin/review ] [ /admin/library ] [ /admin/products ]
+                    │                   │                              │
+                    │ (trigger run)      │ (approve)                   │ (create pack)
+                    ▼                   ▼                              ▼
+           [ Bull Queue → LLM ] [ content.status=approved ] [ /admin/product-builder ]
+                    │                                                  │
+                    │ (complete)                                       │ (generate + publish)
+                    ▼                                                  ▼
+           [ Review Queue +N ] ◄──────────────────── [ Product.status=published ]
+                                                                       │
+                                                                       ▼
+                                                            [ Marketplace visible ]
+
+
+3.2 Customer Purchase Flow
+[ /marketplace ] → browse/filter/search
+      │
+      ▼
+[ /marketplace/:slug ] ── 'Preview' ──→ [ Download free sample ]
+      │
+      │ 'Buy Now' or 'Add to Cart'
+      ▼
+(logged in?) ──── NO ──→ [ /auth/login ] ──→ redirect back to product
+      │
+      YES
+      ▼
+[ /checkout ] ─── apply coupon? ──→ validate → update total
+      │                                                        
+      │ Stripe Elements card form
+      ▼
+[ Confirm Payment ] ──── (fail?) ──→ inline error → retry
+      │
+      │ success → Stripe webhook
+      ▼
+[ /orders/:id/success ] ── confetti animation ── download CTA
+      │
+      ▼
+[ /account/downloads ] ── signed URL ── file downloads
+
+
+3.3 Content Review Flow (Keyboard-First)
+[ /admin/review ] loads with pending queue
+      │
+      ▼
+[ Queue list left panel ] ←→ [ Preview panel right panel ]
+      │                              │
+      │ Click item OR arrow keys      │ Scroll to read full content
+      │                              │
+      │                   ┌──────────┴──────────────┐
+      │                   │                         │
+      │              [ E ] Edit mode           [ Skip / → ]
+      │                   │                         │
+      │                   ▼                         ▼
+      │           [ Inline edit ]           [ Next item loads ]
+      │                   │
+      │    ┌──────────────┴──────────┐
+      │    │                         │
+      │  [ A ] Approve          [ R ] Reject
+      │    │                         │
+      │    ▼                         ▼
+      │  status=approved      [ Reason modal ] → status=rejected
+      │    │                                          │
+      └────┴──────── Next item auto-loads ────────────┘
+________________
+
+
+4. Admin Surface — Screen Specifications
+The admin surface operates on a persistent dark theme with the page background at --color-surface-0 (#0F0F1A). A collapsible sidebar (260px expanded, 72px collapsed) anchors navigation. A sticky top bar (56px) holds global search, notifications, and the user menu. The content area fills the remaining viewport and scrolls independently from the sidebar and top bar.
+
+
+Screen A1 — Login / Authentication
+Layout
+Full-viewport split: left 50% is a cinematic background — a dark gradient with slowly animating noise texture and floating abstract particles representing the content generation pipeline (subtle, non-distracting, 0.3 opacity). Right 50% is the auth card centred in --color-surface-1, with generous padding. On mobile (< 768px), the left panel collapses entirely and the auth card fills the full screen with a compact brand mark at top.
+Visual Hierarchy
+* Top: Small brand logo (32px height) + wordmark in Inter weight-700.
+* H1: 'Welcome back' (text-3xl, brand-gradient text — CSS background-clip). Subtitle: 'Sign in to your AI Content Factory account'.
+* Form: Email input (label floats on focus), Password input (show/hide toggle icon), 'Remember me' checkbox, 'Forgot password?' link right-aligned.
+* Primary CTA: 'Sign in' button full-width, height 48px (lg size), brand-700 background.
+* Divider + 'or continue with' (future OAuth placeholder, grayed out with 'Coming soon' tooltip).
+* Footer: 'Don't have an account? Browse as guest' for customer surface link.
+2FA Screen (Step 2)
+Same layout. Auth card replaces with: '2-Step Verification' heading, compact inline description, six individual digit inputs (24px each, spaced, auto-focus-advance on each keystroke), paste detection (auto-fill all 6 from clipboard), 30-second countdown ring for TOTP expiry, 'Use backup code' link below, 'Back to login' ghost link.
+States
+State
+	Visual Treatment
+	Loading (submit)
+	Button replaces text with spinner + 'Signing in…', all inputs disabled, cursor-wait
+	Error
+	Red banner above form fades in: 'Invalid email or password. X attempts remaining.' Input borders turn danger.
+	Success
+	Button turns success-green with checkmark, brief 400ms hold, then smooth page transition to dashboard
+	2FA Invalid
+	Digit inputs shake (keyframe), turn danger-border, auto-clear after 1s, focus returns to first digit
+	Account Locked
+	Banner: 'Account temporarily locked. Try again in 14 minutes.' with countdown timer.
+	Mobile Adaptations
+* Auth card: full-width, no horizontal padding beyond 16px safe area inset.
+* Inputs: 48px height minimum for touch target compliance (WCAG 2.5.5).
+* Password show/hide: 44×44px touch target.
+* 'Sign in' button: fixed to bottom of viewport with 8px padding on very small screens (<400px).
+
+
+Screen A2 — Admin Dashboard
+Layout Grid (Desktop 1280px+)
+Sidebar (260px) + main area. Main area: sticky header 56px + scrollable content. Content uses a 12-column grid with 24px gutters. KPI row: 6 equal cards (2 columns each). Charts row: left 8-col area chart + right 4-col activity feed. Third row: 7-col automation panel + 5-col top products table. Fourth row: full-width reviewer leaderboard.
+Top Bar (56px fixed)
+* Left: Hamburger/close icon (sidebar toggle, animated bars-to-X), breadcrumb 'Dashboard'.
+* Centre: Global search bar (Cmd+K shortcut shown) — on focus expands to 480px width with autocomplete dropdown.
+* Right: Notification bell (badge count), quick-add '+' button (opens generation modal), avatar (32px circle, dropdown menu).
+Sidebar Navigation
+Nav Item
+	Icon
+	Active State
+	Badge
+	Dashboard
+	LayoutDashboard
+	brand-500 bg-surface-2, left 3px brand border
+	—
+	AI Generator
+	Cpu
+	Same
+	Running indicator (cyan dot)
+	Review Queue
+	ClipboardCheck
+	Same
+	Pending count (amber badge)
+	Content Library
+	Library
+	Same
+	—
+	Product Builder
+	Package
+	Same
+	—
+	Bundle Builder
+	Layers
+	Same
+	—
+	Marketplace
+	ShoppingBag
+	Same
+	—
+	Orders
+	CreditCard
+	Same
+	New orders badge
+	Affiliates
+	Users
+	Same
+	Pending applications badge
+	Coupons
+	Tag
+	Same
+	—
+	Analytics
+	BarChart2
+	Same
+	—
+	Trends
+	TrendingUp
+	Same
+	Hot dot if trends updating
+	Automation
+	Zap
+	Same
+	Alert if job failed
+	System Health
+	Activity
+	Same
+	Status dot (green/amber/red)
+	Settings
+	Settings
+	Same
+	—
+	KPI Cards — Interaction Detail
+Each of the 6 KPI cards uses a Counter animation on first mount: the value counts up from 0 to its actual value over 800ms using an ease-out curve, giving the dashboard an immediately alive quality when it loads. The trend pill uses a micro-sparkline (10-point SVG line, no axes, just trend direction) instead of a simple arrow — this gives at-a-glance momentum information without consuming space.
+Content Generation Area Chart
+The 30-day area chart uses four semi-transparent series stacked: prompts (brand-500/30%), scripts (accent/30%), posters (success/30%), social (warning/30%). Hovering a data point triggers a unified tooltip showing all four values for that day, aligned with a vertical hairline cursor. The chart has a subtle horizontal glow effect on the most recent data point to indicate 'live'. The date range selector (7d/30d/90d/custom) sits top-right of the chart container and updates the chart with a smooth data transition (1.2s staggered re-render).
+Live Activity Feed
+The feed renders as a reversed timeline: newest at top. Each event is a compact row with an icon (type-coded), truncated text, time ago, and a status chip. New events slide in from the top with a 300ms ease-out translateY(-100%→0) + opacity (0→1) transition. The feed auto-refreshes via SSE (Server-Sent Events) — a small 'Live' indicator with a pulsing cyan dot sits in the panel header.
+Automation Status Panel
+Shows the four scheduled jobs as a compact list. Each has: job name, last run time (relative), next run time (countdown), items generated last run, and a coloured status dot. A horizontal timeline scrubber at panel bottom shows the 24-hour generation schedule as a visual bar, with colour blocks for each job type. The 'Trigger Now' button opens a generation modal (see Screen A3).
+Mobile Dashboard (< 768px)
+* Sidebar collapses to bottom tab bar with 5 icons (Dashboard, Review, Products, Orders, More).
+* KPI cards reflow to 2-column grid (2 cards per row, 3 rows).
+* Charts become horizontally scrollable card carousel with snap points.
+* Activity feed becomes a modal sheet (bottom-sheet pattern, 60vh initial).
+* Top bar: search collapses to icon-only, hamburger for full nav.
+
+
+Screen A3 — AI Generator Panel
+Layout
+Two-column: left 60% is the generation cards area, right 40% is the active jobs monitor + cost estimator. On tablet, becomes single column with tabs. On mobile, bottom-sheet for job monitor.
+Generation Cards (4 cards in 2×2 grid)
+Each card is 100% column width, bg-surface-1, radius-xl, Level 1 shadow. Card anatomy: top-left type icon in a 48px brand-gradient circle; top-right 'Last Run' status pill. Card title text-lg weight-700. Description text-sm text-secondary. Input row: quantity stepper (−/+, 64px centred value) + category dropdown + model selector. Advanced options collapsible (chevron toggle, 300ms height animation). Primary 'Generate Now' button full card width, 48px height. A horizontal progress track below the button shows last run's item count (filled = generated, empty = not started).
+Advanced Options (Collapsed by Default)
+Field
+	Component
+	Options
+	Category
+	Single-select dropdown
+	All | Cinematic | Marketing | YouTube | Art | Tech | etc.
+	AI Model
+	Segmented control
+	GPT-4o (default) | Claude 3.5 | Gemini Pro
+	Tone/Style (prompts)
+	Multi-select chip group
+	Photorealistic | Illustrated | Minimalist | Cinematic | etc.
+	Platform (social/scripts)
+	Icon-button group
+	Instagram | YouTube | TikTok | Twitter | LinkedIn
+	Quantity override
+	Slider + number input
+	1–200, snaps to suggested values at 10/25/50/100
+	Active Jobs Monitor Panel
+Shows up to 5 concurrent jobs. Each job card: content type icon, 'Generating…' animated text with ellipsis (CSS animation), a linear progress bar with real-time percentage, elapsed time counter, token count (live), estimated cost (live). On completion, the card transitions: progress bar fills to 100% (green), text changes to 'Complete — X items generated', a 'View in Queue' link appears. Failed jobs: red border, error message, 'Retry' button.
+Cost Estimator Widget
+A read-only panel below jobs monitor. Shows: estimated token cost for next run of each type, daily budget consumed vs. limit (semicircular progress arc), projected monthly cost. When budget approaches 80% of daily cap, the arc turns amber; at 95%, red with a pulsing border.
+
+
+Screen A4 — Review Queue
+Layout — The Dual-Panel Design
+This is the most interaction-intensive screen in the system. It uses a persistent split layout: left panel (35% / 380px min) is the queue list, right panel (65%) is the preview area. A vertical resizable divider between them allows reviewers to adjust proportions. The split is remembered in localStorage. On mobile, the list and preview occupy separate pages with a back button.
+Left Panel — Queue List
+Sticky top: filter bar with type tabs, batch ID search, quality score range slider, status filter. Below: stats row (4 compact chips showing pending/approved today/rejected today/avg time). Then the scrollable list. Each item is a 72px row with: content type icon, truncated text (1 line, 200 chars), category badge, quality score mini-bar, timestamp, and a subtle right-pointing chevron on the currently selected item. The selected item has a brand-glow left border (3px brand-500) and bg-surface-3. Hovering shows action buttons (A/R icons) for fast one-click without even opening the preview.
+Right Panel — Preview Area
+The preview header has: content type + category breadcrumb, quality score badge, model used chip, batch ID chip, edit toggle button. The main preview area is specific to content type (detailed below). The action bar is sticky at panel bottom: keyboard shortcut hints (A/R/E/→/←), Edit button, Reject button (secondary danger), Approve button (primary success, most prominent, rightmost).
+Content Type
+	Preview Layout Detail
+	Prompt
+	Full prompt text in JetBrains Mono, 16px, in a rounded code-style container with line numbers and a copy button. Tags displayed as removable chips below. Category selector (editable). Quality breakdown accordion showing sub-scores (specificity, creativity, commercial potential) as mini bar charts. Aspect ratio badge. Style badges.
+	Script
+	Structured accordion: Hook (always expanded), Intro (collapsed), Body sections (collapsed, each section clickable to expand), Outro (collapsed). Word count and estimated duration prominently displayed. Platform badge. Tone badge. Hook section has special treatment: purple left border, 'Attention-getter' label. Reading mode toggle (fullscreen overlay for long scripts).
+	Poster
+	Generated image fills top 40% of preview panel (object-fit: contain, dark bg). Below: prompt text in mono font. Theme badge, colour palette row (5 swatches from color_palette array, 24px circles). Generator params in a compact 2-column grid. 'Regenerate image' ghost button. Image zoom on click (lightbox overlay).
+	Social Post
+	Platform icon + name header. Caption text in readable font with emojis preserved. Character counter with platform limit ring (arc fills red as limit approaches). Hashtags as interactive chips (click to search/filter other posts with same hashtag). Emoji set display. Best post times as clock badges.
+	Keyboard Navigation (Mandatory Implementation)
+A          → Approve current item (same as clicking Approve button)
+R          → Open reject modal for current item
+E          → Toggle edit mode for current item
+→  or  J   → Load next item in queue
+←  or  K   → Load previous item
+Escape     → Close reject modal / exit edit mode
+Cmd+Enter  → Approve with current edits (when in edit mode)
+Cmd+A      → Select all visible items (for bulk actions)
+?          → Toggle keyboard shortcut overlay
+Bulk Actions Bar
+Appears above the list when ≥1 checkbox is checked. Contains: 'X selected' count, 'Select All' toggle, 'Bulk Approve' button, 'Bulk Reject' button (requires reason in modal), 'Export Selected' button. The bulk approve action shows a confirmation dialog with a summary: 'Approve X items? This action cannot be undone.' with a scrollable list preview of affected items.
+Reject Modal
+Slide-up modal (350ms spring). Contains: item thumbnail/preview, reason selector (5 preset reasons as clickable chips + 'Other'), free text field (required if 'Other', optional for presets, min 10 chars enforced), 'Trigger auto-regen' checkbox (checked by default — sends rejected item to regeneration queue). Action row: 'Cancel' + 'Reject & Continue' (moves to next item in queue automatically).
+
+
+Screen A5 — Content Library
+Layout
+Full-width content area. Top: filter panel (collapsible, 2-row filter chips). Below: stats strip (7 status count chips). Then: view toggle (grid/table), sort dropdown, and the content area.
+Grid View — Card Layout
+4-column grid on desktop (3 on tablet, 2 on mobile). Each card shows: type icon + colour-coded border-left (4px), first 120 chars of text, category badge, quality score bar, status badge, creation date. Select checkbox (top-left, appears on hover). Click opens slide-over drawer (380px from right, 400ms spring). The drawer shows: full content, version history timeline (bullet points, oldest→newest, each showing 'v1 → generated', 'v2 → edited by Priya', etc.), approval history, metadata, and action buttons.
+Table View
+Dense data table with sortable columns: Type | Category | Text Preview | Quality | Status | Generator | Batch | Created. Row height 52px. Status column uses badge chips. Quality column uses a horizontal mini-bar (0–100%). Selected rows highlight bg-surface-3 with brand-500 left border. Batch ID column uses monospace font. Overflow text shows tooltip on hover.
+Version History Drawer
+A vertical timeline component. Each version is a dot on the vertical line with: version number badge, change summary text, actor name + role chip, timestamp. Clicking a version shows the full content snapshot in a comparison view (current on right, selected version on left, character-level diff highlighted — additions in success-green bg, deletions in danger-red strikethrough). A 'Restore this version' button creates a new version rather than overwriting.
+
+
+Screen A6 — Product Builder
+Layout — 4-Step Wizard
+A full-page wizard with a top progress indicator (4 steps with connecting lines, completed steps shown in brand-500 with checkmarks). Each step occupies the full content area. The wizard state is preserved if the user navigates away and returns (stored in zustand with sessionStorage persistence).
+Step 1 — Content Selector
+Left panel (60%): Filterable data table of approved content. Checkbox selection. Selected count badge. Min/max guidelines shown as: 'Select 20–100 prompts for a prompt pack. Currently selected: X.' with a progress bar (red if below min, green if in range, amber if above max). Right panel (40%): Live 'Pack Preview' — shows selected items grouped by category, estimated PDF page count, file size estimate.
+Step 2 — Product Configuration
+Two-column form. Left: Title (with slug auto-preview below in monospace), Short description (140-char counter ring), Full description (rich text with minimal toolbar: bold, italic, bullet list, link). Right: Price input (currency-prefixed, number with 2dp), Original price (optional, shows strikethrough preview), Product type (pre-filled, read-only), Thumbnail upload (drag-and-drop zone, 4:3 ratio guide overlay, crop tool on upload), Tag input (chip-on-Enter pattern).
+Step 3 — Generate & Preview
+Full-width step. A large animated 'Generating your pack…' state with: animated progress stages ('Creating PDF…' → 'Bundling files…' → 'Uploading to storage…' → 'Finalising…'), each stage with an icon, current/total items, and estimated time remaining. On completion, the state transitions to a success card showing: PDF thumbnail (first page preview), file size, page count, 'Download & Preview' button, 'Regenerate' ghost button (if something looks wrong).
+Step 4 — Publish
+Final summary card. Left: product thumbnail, title, type badge, price, item count, file size. Right: Two large action buttons stacked — 'Save as Draft' (secondary, full width) and 'Publish to Marketplace' (primary brand, full width with a subtle shimmer animation to draw the eye). Below: a checklist of publish requirements (title set ✓, description set ✓, price set ✓, thumbnail set ✓, min items met ✓). If any are unchecked, publish button is disabled with tooltip explaining what's missing.
+
+
+Screen A7 — Orders (Admin View)
+Layout
+Full-width table view. Top: summary cards row (4 cards: Today's Revenue, Orders Today, Refunds This Month, Avg Order Value). Then: filter bar (status tabs, date range picker, search). Then: sortable data table with pagination.
+Table Columns & Interactions
+Column
+	Data
+	Interaction
+	Order #
+	Monospace ORD-2026-XXXXX, copy icon on hover
+	Click → order detail drawer or /admin/orders/:id
+	Customer
+	Avatar (24px) + email truncated
+	Click → user profile drawer
+	Products
+	Stacked product thumbnails (3 max, +N if more)
+	Hover → tooltip with full product list
+	Total
+	Price bold, currency symbol
+	Sortable
+	Status
+	Badge chip (pending/paid/cancelled/refunded)
+	Click on 'Refund Requested' opens refund workflow
+	Payment
+	Card brand icon + last 4 (masked)
+	—
+	Date
+	Relative time + full date on hover
+	Sortable
+	Actions
+	View | Invoice | Refund icon buttons (appear on row hover)
+	Refund opens confirmation modal
+	Order Detail Drawer
+620px wide, slides from right. Contains: order header (number, date, status badge), customer section (avatar, name, email, purchase count), items section (product thumbnail + name + price per item), pricing breakdown (subtotal, discount if coupon, tax, total), payment section (card brand, last 4, Stripe charge ID, 'View in Stripe' external link), download history (list of download events with IP, device, timestamp), action section (Issue Refund, Resend Email, Copy Invoice Link).
+
+
+Screen A8 — Analytics & Revenue Intelligence
+Layout
+Full-page analytics suite. Sticky date range selector (7d/30d/90d/YTD/custom) at top applies to all widgets. Content is a masonry-like grid of analytics cards, each independently resizable (drag handles, preferences saved to localStorage).
+Revenue Summary Row (5 KPI Cards)
+Total Revenue (large, with sparkline), MRR (with MoM % change), ARR (projected), AOV (Average Order Value), Refund Rate (with threshold indicator — amber if > 5%, red if > 10%). Each card has a mini 7-day sparkline using the accent colour.
+Revenue Chart — Stacked Area
+Full-width, 280px height. Stacked area chart with 4 series (one per product type). Toggle series by clicking legend items. Chart header shows total for period. Hover tooltip shows all series values + date. Y-axis on right (space-saving). X-axis shows date labels. Zoom: brush selection on chart draws a zoom rectangle; double-click resets.
+Customer Cohort Table
+Heat-mapped table. Rows = acquisition month, Columns = month number after acquisition (Month 0 through Month 12). Cell value = % of cohort that purchased in that month. Cell background interpolates from brand-50 (0%) to brand-700 (highest %). Hovering a cell shows: 'Customers acquired in [month]: X. Still purchasing in month [N]: Y (Z%)'.
+Conversion Funnel
+5-step horizontal funnel visualisation. Each step is a trapezoid shape wider at top, narrowing toward bottom. Absolute number inside each step. Drop-off % shown as a red label between steps. Steps: Unique Visitors → Product Views → Add to Wishlist → Checkout Started → Order Paid. Clicking a step shows a contextual breakdown of where the drop-offs went.
+Content Performance Matrix — Scatter Plot
+X axis: Category approval rate (0–100%). Y axis: Associated product purchase rate (0–100%). Bubble size: volume of content items in that category. Quadrant lines divide the chart into 4 zones with labels: 'Optimise' (high approval, low purchase — great content nobody wants), 'Star' (high both — keep doing this), 'Investigate' (low approval, low purchase — problem area), 'Hidden gem' (low approval, high purchase — reviewers too strict?). Each bubble is labelled with category name on hover.
+
+
+Screen A9 — Trend Intelligence Dashboard
+Layout
+Three-column layout on large desktop: left 30% is the hot topics feed, centre 45% is the scatter/chart area, right 25% is controls and configuration.
+Hot Topics Feed
+A live-updating card list. Each card: topic name in text-md weight-600, source icons (small 16px icons for Google/Twitter/YT/Reddit, greyed out if not a signal source), a horizontal score bar (brand gradient, 0–100), a content gap indicator (empty library icon with gap %, coloured success if high gap — opportunity), and a 'Pin to Next Batch' toggle button. The feed auto-refreshes every 2 minutes; new items slide in from the top with a subtle 'NEW' flash badge that fades after 3 seconds. Items with score > 80 have a pulsing amber dot indicating 'Hot'.
+Generation Priority Matrix Heatmap
+A 4×5 grid (rows = content type, columns = top categories). Each cell shows the current weight as both a number (0–100) and a fill colour (brand-50 → brand-700 gradient based on weight). Hovering a cell shows the formula breakdown (purchase rate, approval rate, trend score, search volume → combined weight). Admin can click any cell to enter a manual override weight (number input appears inline), which is saved with a visual 'override' indicator (cyan border on the cell).
+Manual Topic Injection Panel
+A text area with placeholder 'Type a custom topic to inject into the next generation run…'. 'Add to Queue' button pushes it to a visible list of queued manual topics below the textarea. Queued topics display as removable chips with a 'Priority' badge. Topics injected in the last batch are shown with a success tick and the batch ID.
+
+
+Screen A10 — Coupon & Discount Manager
+Layout
+Header with 4 summary KPI cards. Below: full-width coupons table. 'Create Coupon' button top-right opens the creation modal.
+Create / Edit Coupon Modal
+Wide modal (720px, two-column form). Left column: Code field (auto-generate button with sparkle icon refreshes to a new random code), Type selector (segmented: % Off | $ Off), Value input (changes label: '% Discount' or '$ Amount'). Right column: Min order value, Max discount cap (only visible for % type), Usage limits (total + per user), Date range picker (calendar component). Bottom: Product scope selector (all products default, or searchable multi-select of specific products/types) + Active toggle. Preview card (live): shows how the discount will appear to customers including 'LAUNCH20 — 20% off your order (max $50 off)'.
+
+
+Screen A11 — Automation Intelligence Dashboard
+Layout
+Dense dashboard. Top: 12 system status cards in a 4×3 grid (one per automation system). Each card is compact (120px height): system name in text-sm weight-600, coloured status ring (green/amber/red), last run time, items processed today, 'Configure' link. Cards with issues have an amber warning icon.
+Auto-Approval Performance Panel
+Below system cards. Three gauge charts side by side (Precision, Recall, F1 score) — semicircular arcs, 0–100%, colour shifts green→amber→red as score drops. Confusion matrix: a 2×2 grid table (True Positive / False Positive / True Negative / False Negative) with colour coding. Model info: version string, training date, samples trained on. 'Retrain Now' button with a confirmation modal showing estimated retraining time.
+Queue Health Condensed View
+10 horizontal progress-bar rows (one per queue). Each row: queue name, a segmented bar showing (waiting/active/completed/failed counts coloured appropriately), and a numeric summary. Failed count in red. Clicking a row opens Bull Board for that queue in a new tab. A 'Queues are healthy' or 'X queues have failures' summary badge sits in the panel header.
+
+
+Screen A12 — System Health Monitor
+Layout
+Real-time operational cockpit. Auto-refreshes every 30 seconds. Last refreshed timestamp shown top-right with 'Refresh now' button.
+Service Status Row
+10 service tiles in a 5×2 grid. Each tile: service name, status dot (green/amber/red), response time in milliseconds. Dot pulses when status changes. Clicking a tile opens a detail panel showing: uptime %, recent latency chart (30 min), last 5 status events.
+API Response Time Chart
+Real-time line chart, 60-minute window. Three lines: p50 (green), p95 (amber), p99 (red). Y-axis: milliseconds. A horizontal red dashed line shows the SLA threshold (300ms p95). When p95 exceeds this line, the chart border turns amber.
+Error Rate Monitor
+Grouped bar chart (5-minute buckets, 2-hour window). Blue bars = 4xx, Red bars = 5xx. A threshold line at the configured SLA error rate. Hovering a bucket shows the breakdown of error types and the top 3 affected endpoints.
+
+
+Screen A13 — Audit Log Viewer
+Layout
+Filter panel (collapsible) + dense data table. Filter fields: Date range, Actor (user autocomplete search), Action type (multi-select dropdown), Entity type (multi-select). 'Export' button top-right.
+Table Columns
+Timestamp (full ISO format, monospace) | Actor (avatar + name + role badge) | Action (colour-coded verb: publish=success, delete=danger, update=info, login=neutral) | Entity (type chip + ID in monospace) | IP Address | 'Diff' button. The Diff button opens a side-by-side JSON comparison modal with syntax highlighting and change markers.
+Diff Viewer Modal
+Split screen, 900px wide modal. Left: 'Before' JSON with deleted fields in red background. Right: 'After' JSON with added/changed fields in green background. Field names and structure are aligned so changes are visually obvious. A compact summary strip above the diff shows: 'X fields changed, Y fields added, Z fields removed'.
+________________
+
+
+5. Customer Surface — Screen Specifications
+The customer surface uses a light mode primary design (with full dark mode parity). The aesthetic shifts from the admin surface's dense chrome to an open, airy premium feel — large product imagery, generous whitespace, editorial-quality typography, and a focus on browsing delight and purchase confidence.
+
+
+Screen C1 — Marketplace Listing
+Navigation Bar (sticky, 64px)
+Light mode: white bg with subtle bottom border. Dark mode: surface-1 bg. Left: brand logo (wordmark + logomark). Centre: search bar (440px, with keyboard shortcut '/' hint inside). Right: product type nav pills (Prompts | Posters | Scripts | Social), Cart icon with count badge, 'Sign In' button (ghost), 'Get Started' button (primary brand, 36px height).
+Hero Section
+Full-width, 520px height on desktop (280px mobile). Split layout: left 55% is text content — headline (text-4xl weight-800, gradient text), subtitle (text-xl text-secondary), two CTA buttons (primary: 'Browse All Packs', secondary: 'Try Free Preview'). Right 45% is a cinematic animated element: slowly rotating stack of 3D product cards (CSS perspective transform, subtle rotate on scroll parallax), each showing a different product type thumbnail. The cards have subtle glassmorphism treatment with border-white/20.
+Filter Sidebar (240px, sticky) + Product Grid
+Sidebar collapses on mobile to a 'Filters' bottom sheet trigger button. Sidebar content: product type checkboxes (with count in parentheses), price range dual-handle slider (min/max with formatted currency labels), rating filter (star icons, click to set minimum), tags cloud (top 20 tags as clickable chips, selected = brand-filled, unselected = outlined), sort selector (dropdown: Newest / Best Selling / Price ↑ / Price ↓ / Rating).
+Product Grid
+Responsive: 4 columns on 1280px+, 3 on 1024px, 2 on 768px, 1 on mobile. Cards have consistent height with thumbnail fixed at 56% card height (aspect ratio 16:9). Card content below thumbnail: type badge, title (2-line clamp), short description (1-line clamp, text-secondary), item count chip, star rating row, price (text-lg brand weight-700). Hover state: thumbnail scales 1.05 (overflow hidden), shadow Level 5, bottom-edge preview button slides up: 'Preview Pack' with eye icon.
+Empty State (No Results)
+Centred illustration (abstract generative art SVG). Heading: 'No packs match your filters'. Subtext: 'Try adjusting your filters or search term.' 'Clear All Filters' button. Below: 'Popular right now' section showing 4 top-selling cards as horizontal scroll.
+
+
+Screen C2 — Product Detail Page
+Layout
+Breadcrumb (Marketplace → Category → Product Name). Then 2-column hero: left 52% is the product visual area, right 48% is the purchase panel. Below the hero: 3 tab sections (What's Included, Reviews, Related Products).
+Product Visual Area (Left Column)
+Primary thumbnail as a large card with rounded corners (radius-xl). Below it: a 5-slot thumbnail strip for multiple preview images (click to swap primary). The primary image has a 'Full Preview' icon button (top-right corner, appears on hover) that opens a lightbox. For prompt packs: the thumbnail shows a 3×3 mosaic of generated example images. For script packs: a typographic cover with the script titles listed. Below thumbnail strip: 'Download Free Preview' button (outline brand, full width) with file size shown: 'PDF · 2.4 MB · 5 sample prompts'.
+Purchase Panel (Right Column, Sticky on Scroll)
+Panel sticks to viewport top when scrolling past the hero. Content: Product title (text-2xl weight-700). Type badge row. Rating display (stars + count + 'X verified reviews' link). Price (text-3xl weight-800 brand) with optional original strikethrough price and savings badge. Item count pill ('50 AI Prompts'). License selector (3 radio cards: Personal / Commercial / Extended, each showing price multiplier and key rights). 'Buy Now' button (primary brand, 56px height, full width). 'Add to Wishlist' ghost button (full width, heart icon). Secure checkout badges: Stripe logo + SSL lock icon + 'Instant Download'. Coupon field (collapsible, 'Have a coupon code?' link reveals input).
+What's Included Tab
+Accordion listing of content categories inside the pack. Each accordion item: category name + item count. Expanded: shows 3 sample items with truncated text. A 'See full preview' CTA at bottom of accordion.
+Reviews Tab
+Top row: aggregate rating (large number, 5 stars visual, total count). Star distribution bars (5-star down to 1-star, with filled bars showing proportion). 'Write a Review' button (visible only to verified purchasers, disabled with tooltip for others). Review cards: avatar circle (initial letter if no photo), reviewer name + verified badge, star rating, title bold, body text (expandable if > 200 chars), date, helpful upvote button.
+Mobile Product Detail
+* Sticky 'Buy Now' bar fixed to viewport bottom (64px, with price and button).
+* Visual area becomes full-width, horizontal swipeable gallery.
+* Purchase panel appears below visual area (not sticky on mobile — sticky only for tablet+).
+* Tab sections become stacked accordion sections (no horizontal tabs on mobile).
+
+
+Screen C3 — Search Results Page
+Layout
+Search bar at top (full-width, pre-filled with query). Below: 'X results for "query"' count + sort dropdown. Left sidebar for filters (same as marketplace). Right: results grid.
+Autocomplete Dropdown
+Appears after 200ms debounce on typing (prevents flicker). Shows up to 8 suggestions in a floating panel (shadow Level 2). Each suggestion: product thumbnail (32px), title, type badge. 'Popular searches' section below suggestions (if query is short/empty) showing 5 trending queries with fire icon. Keyboard navigation: ↑↓ arrows to navigate, Enter to select, Escape to close. Selected suggestion highlighted with bg-surface-3.
+Zero Results State
+Large centred illustration with text: 'No results for "query"'. Below: 'Did you mean: [corrected query]?' link if spell suggestion available. 'Try searching for' section: 4 related query chips. 'Trending now' section: 6 trending packs in a 2-column grid. 'Browse all' CTA button.
+Bundle Results Section
+If any bundles match, they appear in a special highlighted row above individual product results: a horizontal scroll container with 'Bundles — Save more' section header. Each bundle card has the stacked thumbnails treatment, the savings badge prominent, and a slightly larger card size to differentiate from individual products.
+
+
+Screen C4 — Checkout Flow
+Layout
+Clean 2-column layout (left 58% = form, right 42% = order summary). Mobile: summary collapses to accordion above the form.
+Left Column — Payment Form
+Section 1: Contact (email pre-filled if logged in, locked). Section 2: Stripe Elements embedded card form — the card input is styled to match the design system (matching border-radius, border colours, focus states injected via Stripe appearance API using the platform's design tokens). Section 3: Billing address (country selector triggers tax calculation via Stripe Tax). No unnecessary fields — name is taken from account. 'Save card for future purchases' checkbox.
+Right Column — Order Summary
+Product thumbnail(s) with quantity badges. Product name + type. Line item price. Coupon field with live validation (check icon when valid, error when invalid). Subtotal, Discount (if coupon, in success-green), Tax estimate (greyed, 'Calculated at checkout' until address entered), Total bold text-xl. 'Place Order' button (brand, full width, 52px). Security badges below button. Below that: refund policy link, terms link.
+Payment States
+State
+	Visual Treatment
+	Idle
+	Normal form, 'Place Order — $XX.XX' button
+	Processing
+	Button disabled with spinner. 'Processing payment…' text. Stripe animation active.
+	Error
+	Red banner above form: error message from Stripe (card declined, insufficient funds, etc.). Button resets. Card field highlighted in danger.
+	Success
+	Entire page transitions: form fades out, success state animates in (see Screen C5).
+	3D Secure
+	Stripe 3DS modal appears automatically (handled by Stripe.js, not custom-built).
+	Mobile Checkout
+* Order summary accordion at top (collapsed by default, tap to expand).
+* Apple Pay / Google Pay payment buttons appear at top of form section on supported devices (above card fields).
+* Card input fields stacked vertically (card number full width, expiry + CVC side by side, 50/50).
+* 'Place Order' button fixed to viewport bottom on very small screens.
+
+
+Screen C5 — Order Success
+Visual Treatment
+Full-screen celebration moment. Background: brand gradient with subtle animated particles (same engine as login page). Centre: large animated success icon (circle draws from 0 to 360deg over 600ms, then checkmark draws in over 400ms — pure SVG stroke-dashoffset animation). Below: confetti burst (lightweight canvas implementation, 60 particles, brand + accent + success colours, 2 second lifetime, then fade). Heading: 'Your pack is ready to download!' Subtext: order number in monospace.
+Download Section
+One card per purchased product: thumbnail, title, type badge, item count. A large 'Download Now' button (48px, full width, success variant). Underneath: 'Download expires in X days. You can re-download up to 5 times from your account.' Download progress: when clicked, button shows a thin progress bar as the signed URL is fetched and download begins. Post-download: button changes to 'Downloaded ✓' in success colour.
+What's Next Section
+Two CTA cards side by side: 'Explore More Packs' (links to marketplace) and 'Leave a Review' (links to /account/reviews with product pre-selected). Below: 'Share your purchase' section with social share buttons (Twitter, WhatsApp, LinkedIn) using pre-filled share text.
+
+
+Screen C6 — Customer Account Portal
+Layout
+Left sidebar (220px) with account navigation + profile summary. Right content area (remaining width). On mobile: sidebar collapses to a horizontal tab row below the profile header.
+Profile Header (top of sidebar)
+User avatar (64px circle, editable — click to upload). Display name text-md weight-600. Email text-sm text-secondary. Member since date. Tier badge (Verified Customer, Top Buyer, etc.). 'Edit Profile' link.
+Sidebar Navigation Items
+Profile | Orders | Downloads | Wishlist | Reviews | Notifications | Affiliate | Security. Active item has brand left border + bg-surface-2. Non-active: text-secondary, hover bg-surface-1.
+Orders Sub-page
+Tabbed: All | Pending | Paid | Refunded. Order cards: compact rows with order number, date, product thumbnails (stacked), total, status badge, 'View Details' and 'Download' buttons. Empty state: illustration + 'No orders yet' + 'Browse Marketplace' CTA.
+Downloads Sub-page
+Grid of download cards. Each: product thumbnail, title, purchase date, download count meter ('3 of 5 downloads used' as a segmented bar), 'Download Again' button (disabled if limit reached with tooltip), 'Link expired' indicator if signed URL is old.
+Wishlist Sub-page
+Grid of wishlisted items. Each: product card (same as marketplace but with 'Remove from wishlist' × button). If price dropped since adding: 'Price Drop!' badge in success colour with 'Was $X, now $Y'. Empty state: heart icon illustration + 'Your wishlist is empty. Save products you love.' + 'Browse Marketplace' CTA.
+Affiliate Sub-page
+If not affiliate: hero card explaining the programme, commission tiers table, 'Apply Now' CTA button. If pending: status card with timeline showing application submitted → under review → decision. If active: full dashboard (see Screen C8 — Affiliate Portal).
+
+
+Screen C7 — Affiliate Portal (Customer-Facing)
+Earnings Header
+Four KPI cards: Pending Balance (large, brand colour), Total Earned (all time), Current Tier (with tier badge), Next Tier Progress (bar from 0 to threshold). The pending balance card has a 'Request Payout' button embedded if balance ≥ $20 minimum.
+Referral Link Panel
+Prominent card: 'Your Referral Link' heading. Full URL in a read-only input with a 'Copy' button (icon, tooltip shows 'Copied!' for 2 seconds on click). QR code (click to download as PNG). Social share buttons row: Twitter | Facebook | LinkedIn | WhatsApp | 'Copy Link'. Below: 'Cookie duration: 30 days' info chip.
+Conversions Table
+Paginated table. Columns: Date | Customer (masked: j***@example.com for privacy) | Order Value | Commission | Status. Status badges: Pending (amber, within refund window) | Approved (green, eligible for payout) | Paid (blue) | Reversed (red, order was refunded).
+Marketing Materials Section
+A grid of downloadable assets: banner images in various sizes (300×250, 728×90, 160×600), pre-written social media captions (click to copy), product promotional images (approved subset for affiliate use). Each asset card: preview thumbnail, dimensions/type label, download button.
+
+
+Screen C8 — Notification Center
+Bell Dropdown (Global — All Pages)
+Clicking the bell icon opens a 380px wide dropdown panel (shadow Level 2, radius-xl). Header: 'Notifications' + 'Mark all read' link. Body: list of 5 most recent notifications, each a 72px row with: type icon (colour-coded), title text-sm weight-500, body text-xs text-secondary truncated 1 line, time ago text-xs text-tertiary, unread indicator (3px brand dot left side). Footer: 'View all notifications' link button.
+Full Notifications Page (/notifications)
+Filter tabs: All | Unread | Orders | Products | Promotions. Each notification is a card (not a compact row on this page) with more space for the body text. Action button per notification type (e.g., 'View Order', 'Download Now', 'Leave Review'). 'Mark as read' on click. Swipe-to-dismiss on mobile (SwipeableListItem pattern).
+Notification Preference Settings
+Toggle grid: rows = notification types, columns = channels (In-App, Email, Push). Toggle switches for each combination. Category headers group related notification types. Changes save immediately with a subtle success toast (no save button needed — optimistic updates via API PATCH).
+________________
+
+
+6. Micro-Interactions & Motion Bible
+Every animation in the system has a reason to exist. The following eight signature interactions define the motion character of the product. Engineers should implement these exactly as specified — they collectively create the sense that the interface is alive and responsive.
+
+
+MI-01 — The Generation Counter
+Trigger
+A new AI generation batch completes and the pending review count increments in the KPI card and the sidebar badge.
+Animation Sequence
+1. Sidebar badge: scale(1.0) → scale(1.35) in 150ms (spring, stiffness 400, damping 10)
+2. Sidebar badge: new number cross-fades in during scale peak (75ms opacity 0→1)
+3. Sidebar badge: scale(1.35) → scale(1.0) in 200ms (ease-out)
+4. KPI card value: starts counting up from previous value to new value
+   Duration: min(800ms, countDelta × 20ms) capped at 1200ms
+   Easing: cubic-bezier(0, 0, 0.2, 1) — fast start, gentle finish
+5. KPI card: brief brand-glow pulse (shadow 0→glow→0 over 600ms)
+Reduced Motion Alternative
+Badge number updates instantly. KPI value jumps to new value with a single 150ms opacity cross-fade (no transform, no count-up).
+
+
+MI-02 — The Review Approval
+Trigger
+Reviewer clicks Approve (or presses A).
+Animation Sequence
+1. Approve button: scale(0.95) in 50ms (instant press feedback)
+2. Button background transitions from brand-700 to success (150ms ease-in)
+3. Button text cross-fades to '✓ Approved' in 100ms
+4. Content item in left list: green left border slides in from left (200ms ease-out)
+5. Status badge in list item: morphs from 'Pending' amber to 'Approved' green (200ms)
+6. After 300ms: next item in queue auto-loads into preview panel
+   — translateX(20px, opacity 0) → translateX(0, opacity 1) over 250ms ease-out
+7. Progress counter at list top increments (same as MI-01 badge animation)
+
+
+MI-03 — The Product Pack Generation
+Trigger
+Admin clicks 'Generate Pack' in Product Builder Step 3.
+Animation Sequence
+1. Button collapses to a pill (width: 100% → 48px, 300ms spring)
+   Pill shows indeterminate circular progress spinner
+2. Stage indicators animate in one by one (stagger 150ms per stage):
+   Each stage: translateY(8px, opacity 0) → translateY(0, opacity 1)
+3. Per stage, the stage icon animates:
+   - 'Creating PDF…': document pages fan out (CSS transform stagger)
+   - 'Bundling…': box closes and seals (CSS keyframe)
+   - 'Uploading…': upward arrow bounces (translateY loop)
+   - 'Finalising…': checkmarks appear sequentially
+4. On complete: all stages get checkmarks (stagger 80ms each)
+5. Success card slides up from bottom: translateY(40px, opacity 0) → normal (400ms spring)
+
+
+MI-04 — The Cart Add & Checkout Celebration
+Trigger
+Customer clicks 'Buy Now' on a product and the order succeeds.
+Animation Sequence
+Checkout success animation:
+1. Background gradient sweeps in (0% → 100% coverage, 700ms ease-out)
+2. Success circle SVG: strokeDashoffset 314px → 0 over 600ms ease-in-out
+3. Checkmark SVG: strokeDashoffset 48px → 0 over 400ms ease-out (starts 400ms after circle)
+4. Confetti burst: 60 particles spawn at checkmark centre
+   - Random velocities (spread 360°), initial speed 8–14px/frame
+   - Gravity: +0.3px/frame²
+   - Each particle: random size (6–14px), random rotation speed
+   - Colour: brand-500, accent, success, warning (equal probability)
+   - Lifetime: 2000ms, opacity fades from 1→0 in final 500ms
+5. Heading: 'Your pack is ready!' slides up from +20px over 500ms (starts 800ms after circle)
+6. Download buttons stagger in: each +100ms delay, same slide-up
+
+
+MI-05 — The Quality Score Reveal
+Trigger
+A content item is opened in the review queue preview panel.
+Animation Sequence
+1. Quality score bar: width animates from 0% to actual% over 600ms
+   Easing: cubic-bezier(0.34, 1.56, 0.64, 1) — spring overshoot for visual interest
+   Colour: transitions through red → amber → green based on score (CSS hue interpolation)
+2. Score number: count-up from 0 to actual score, same 600ms duration
+3. Sub-score bars (if expanded): stagger 80ms apart, same animation per bar
+4. Score badge: scale(0) → scale(1) with spring at animation end (200ms)
+
+
+MI-06 — The Sidebar Collapse
+Trigger
+Admin clicks the hamburger/collapse button to toggle the sidebar.
+Animation Sequence
+Collapse (260px → 72px):
+1. Nav item labels: opacity 1→0 in 150ms
+2. Nav item labels: visibility hidden after 150ms
+3. Sidebar width: 260px → 72px over 250ms cubic-bezier(0.4, 0, 0.2, 1)
+4. Hamburger icon: 3 bars morph to stacked-dots icon over 200ms
+5. Main content area: margin-left adjusts simultaneously (no content jump)
+
+
+Expand (72px → 260px):
+1. Width: 72px → 260px over 250ms (same easing)
+2. Nav item labels: visibility visible immediately
+3. Labels: opacity 0→1 starting at 100ms into width animation
+4. Icon reverts to hamburger bars
+
+
+MI-07 — The Live Feed Item Arrival
+Trigger
+A new event arrives via Server-Sent Events and is prepended to the activity feed.
+Animation Sequence
+1. New item renders above the list at height: 0, opacity: 0, overflow: hidden
+2. Height animates from 0 to item's natural height over 300ms ease-out
+3. Opacity: 0 → 1 from 100ms to 300ms
+4. A subtle brand-coloured flash (bg-brand-900 → transparent) highlights the new row
+   over 1000ms ease-out — marking it as 'new' without being distracting
+5. If feed exceeds max display count (25 items), last item slides out:
+   height: natural → 0, opacity: 1 → 0 over 200ms ease-in
+
+
+MI-08 — The Page Transition
+Trigger
+User navigates between major sections (via React Router).
+Animation Sequence
+Outgoing page:
+1. opacity: 1 → 0, translateX: 0 → -20px over 150ms ease-in
+
+
+Incoming page:
+1. Starts at: opacity: 0, translateX: 20px
+2. Transitions to: opacity: 1, translateX: 0 over 250ms ease-out
+3. Delay: 50ms after outgoing animation starts (overlap for continuity)
+
+
+For drill-down navigations (e.g., order list → order detail):
+- Outgoing: scale(1.0) → scale(0.97), opacity: 1→0, 200ms
+- Incoming: scale(1.02) → scale(1.0), opacity: 0→1, 300ms
+
+
+Loading skeleton during route transition:
+- Skeleton screens use a shimmer animation: linear-gradient sweeps L→R
+  over 1500ms, infinite, with 300ms delay between loops
+________________
+
+
+7. Responsive Design Specifications
+Every screen must work at every breakpoint. The following table specifies the primary layout transformation for each screen at each breakpoint tier. The rule is always: information hierarchy stays the same, but the layout adapts to prioritise the most important action at each viewport size.
+
+
+7.1 Admin Surface Responsive Transforms
+Screen
+	Desktop (1280px+)
+	Tablet (768–1279px)
+	Mobile (< 768px)
+	Dashboard
+	6-col KPI row, 2-col main body, sidebar nav
+	4-col KPI, stacked body, sidebar collapsed
+	2-col KPI, single col body, bottom tab nav, charts → carousel
+	AI Generator
+	2-col (cards left, monitor right)
+	Single col with tabs (Cards / Monitor / Costs)
+	Single col, job monitor as bottom sheet
+	Review Queue
+	35/65 split (list/preview), full preview
+	50/50 split, preview truncated with 'expand' button
+	Full-screen list → tap to full-screen preview (separate views)
+	Content Library
+	4-col card grid, side-drawer for details
+	3-col grid, details in modal
+	2-col grid, details as bottom sheet
+	Product Builder
+	Full wizard, 2-col steps where applicable
+	Full wizard, single col
+	Full wizard, step indicator compact, touch-optimised inputs
+	Analytics
+	Masonry analytics grid, side-by-side charts
+	Stacked analytics, charts scrollable
+	Single col, each chart full-width, horizontal scroll for tables
+	Orders (Admin)
+	Full table with all columns
+	Table with 5 essential columns, details in drawer
+	Card list view instead of table, compact order cards
+	Trend Dashboard
+	3-col (feed/charts/controls)
+	2-col (feed+charts / controls)
+	Single col, tabs: Feed / Charts / Controls
+	
+
+7.2 Customer Surface Responsive Transforms
+Screen
+	Desktop (1280px+)
+	Tablet (768–1279px)
+	Mobile (< 768px)
+	Marketplace
+	240px sidebar + 4-col product grid
+	Collapsible sidebar + 3-col grid
+	Filter bottom sheet + 1-col or 2-col compact grid
+	Product Detail
+	52/48 split hero, horizontal tabs
+	60/40 split, horizontal tabs
+	Stacked (visual then purchase panel), vertical accordion sections, sticky buy bar
+	Search Results
+	Same as marketplace (sidebar + grid)
+	Same as marketplace tablet
+	Filter bottom sheet + vertical scroll results
+	Checkout
+	58/42 split (form/summary)
+	55/45 split
+	Summary accordion at top, full-width form below, sticky place order
+	Order Success
+	Centred content, 680px max-width
+	Centred content, 600px max-width
+	Full-width, download buttons full-width, scrollable
+	Account Portal
+	220px sidebar + content area
+	Top profile header + horizontal tab scroll
+	Inline profile header + tab pills (scrollable row)
+	Affiliate Portal
+	Standard 2-col KPI + table
+	Single col KPI, full-width table
+	Single col, table → card list, referral link prominent at top
+	
+
+7.3 Touch Interaction Standards
+Rule
+	Specification
+	Minimum touch target
+	44×44px for all interactive elements (WCAG 2.5.5 AAA)
+	Swipe gestures (mobile)
+	Product image gallery: swipe left/right. Review items: swipe right = approve, swipe left = reject. Notification items: swipe left = dismiss. Bottom sheets: swipe down = dismiss.
+	Long press
+	Content item cards: long-press 400ms opens context menu (Approve / Reject / View Details) — alternative to swipe for accessibility.
+	Pinch-to-zoom
+	Product thumbnail images: pinch to zoom with 3×3 pan boundaries. Disabled on maps/charts (conflicting gesture).
+	Pull-to-refresh
+	Review queue list, activity feed, notifications: pull down to refresh (native browser pattern + custom loading indicator).
+	Bottom sheets
+	All secondary panels on mobile use bottom sheet pattern: drag handle at top, smooth drag-to-dismiss, backdrop click to dismiss. Max height: 80vh. Min height set by content.
+	Safe areas
+	All fixed elements (top bar, bottom tabs, sticky buy bar) respect iOS/Android safe area insets via env(safe-area-inset-*).
+	________________
+
+
+8. Edge Cases & Resilience Design
+A design system is only as good as its handling of failure states. The following specifications ensure the platform never looks broken, even when something is.
+
+
+8.1 Loading States — Skeleton Screens
+Every data-driven component has a skeleton screen that matches its exact layout. Skeletons use a shimmer animation (150ms → 1500ms loop). The rule is: skeletons must be shown within 100ms of a navigation event. Never show a blank white/dark screen.
+Component
+	Skeleton Anatomy
+	KPI Card
+	Rect placeholder for icon circle (48px). Two rect lines for value (40px height) and label (16px height). Small rect for trend pill. Full card height matches real card.
+	Product Card
+	Full-width rect (aspect ratio 4:3) for thumbnail. 3 rect lines below for title, description, and price row. All with border-radius matching component.
+	Data Table
+	Header row: 5 rect cells matching column widths. 8 body rows: same structure as header. Alternating row shading preserved.
+	Chart
+	Chart container has a central loading state: circular spinner (brand-coloured) + 'Loading data…' text. No skeleton bars (misleading for charts).
+	Review Preview
+	Left panel: 8 stacked text lines at varying widths (60%/80%/70%/90%/60%/40%/70%/80%). Right panel (poster): large rect placeholder.
+	
+
+8.2 Empty States
+Screen/Component
+	Empty State Design
+	Review Queue (no pending items)
+	Centred illustration: a serene mountain landscape with 'All clear' text (visual metaphor for calm). Heading: 'Queue is empty — great work!'. Subtext: 'Next generation batch runs in X hours.' [countdown timer]. CTA: 'Trigger generation now' button. Subtle confetti if this is the first time all items were reviewed.
+	Marketplace (no products)
+	Centred abstract generative art SVG. 'Coming Soon' heading. 'Products are being created right now.' Subtext. Animated progress bar showing generation progress (live from API). Email notification signup field.
+	Order History (no orders)
+	Shopping bag illustration with sparkles. 'No purchases yet'. 'Explore our digital packs' CTA button. 3 featured product cards below as inspiration.
+	Wishlist (empty)
+	Heart outline illustration. 'Your wishlist is empty'. 'Save products you love by clicking the heart icon.' Browse button.
+	Search (zero results)
+	Magnifying glass with a question mark. 'No results for [query]'. Suggestions section. Trending searches.
+	Notifications (none)
+	Bell illustration. 'You're all caught up!'. 'We'll notify you about orders, price drops, and new releases.' Preferences link.
+	Analytics (new account, no data)
+	Chart illustration with upward trend (aspirational). 'Your analytics will appear here once you start selling.' Setup checklist of 3 steps.
+	
+
+8.3 Error States
+Error Type
+	Design Response
+	API timeout / 500 error
+	Inline error state in the affected component only (not full-page). Error card with: warning icon, 'Something went wrong' heading, technical message (dev only), 'Try again' button that retries the request with exponential backoff. Toast notification: 'Failed to load data. Retrying…'
+	Network offline
+	Global banner (top, amber): 'You appear to be offline. Some features may be unavailable.' Dismissible. Auto-dismisses on reconnect with a 'Back online' success toast. Cached data remains visible with a subtle 'Showing cached data from X mins ago' label.
+	403 Forbidden
+	Graceful redirect to the most appropriate accessible page with a toast: 'You don't have permission to view that.' Not a full error page — stay in context.
+	404 Not Found
+	A dedicated 404 page with brand illustration, 'Page not found' heading, search bar to find what they were looking for, and home/marketplace navigation buttons. The URL is preserved so the user can see what they tried to visit.
+	Form validation error
+	Field-level: inline error message below field, field border turns danger. Multi-field: a summary error banner above the form listing all errors. Scroll to first error automatically on form submission attempt.
+	Payment failure (Stripe)
+	Inline: Stripe error message (never obscured or replaced with a generic message — Stripe messages are already user-friendly). Card field highlighted. 'Learn more' link to payment troubleshooting. Support chat trigger.
+	LLM generation failure
+	Generation card shows error state: 'Generation failed for X/50 items. Y items were created successfully.' Partial results preserved. 'Retry failed items' button requeues only the failed items.
+	
+
+8.4 Performance Edge Cases
+Scenario
+	Design Response
+	Very long prompt text (1000+ chars)
+	Text truncates at 3 lines with a 'Show more' expand button. Full text visible in detail panel/preview only. Never causes layout overflow.
+	1000+ items in review queue
+	Virtual list rendering (react-window or @tanstack/virtual). Only visible rows are in the DOM. Scroll position preserved on item update. 'Jump to top' FAB appears after scrolling 500px.
+	Slow image loading (posters)
+	Placeholder: brand-coloured blurred gradient matching the poster's dominant colour (extracted server-side, stored as hex). Progressive JPEG loading: thumbnail first, then full resolution swaps in.
+	Large data table (1000+ rows)
+	Pagination (20 rows/page) as primary pattern. Optional: virtualized infinite scroll with 'X of Y rows loaded' counter. Column-level filter before fetch (reduces payload).
+	Slow generation batch (100+ items)
+	Progress is chunked: 'X of 100 generated' updates every 5 items. Cancel button always available. Partial results visible in review queue in real-time as items complete.
+	________________
+
+
+9. Accessibility Specifications
+WCAG 2.2 AAA compliance is a hard requirement. The following specifications provide implementation-ready guidance for every accessibility concern in the design.
+
+
+9.1 Colour Contrast Requirements
+Text Pair
+	Light Mode Ratio
+	Dark Mode Ratio
+	WCAG Level
+	--text-primary on --bg-page
+	18.1:1
+	16.8:1
+	AAA ✓
+	--text-secondary on --bg-card
+	5.2:1
+	5.8:1
+	AA ✓ (AAA for large text)
+	White text on --color-brand-700
+	4.9:1
+	4.9:1
+	AA ✓
+	White text on --color-danger
+	4.7:1
+	4.7:1
+	AA ✓
+	White text on --color-success
+	4.6:1
+	4.6:1
+	AA ✓
+	--color-brand-500 link on --bg-page
+	4.8:1
+	5.2:1
+	AA ✓
+	--text-tertiary on --bg-card
+	3.1:1
+	3.4:1
+	AA for large/UI text ✓
+	
+
+9.2 Focus Management
+* All interactive elements have a visible focus ring: 2px solid --border-focus (brand-500) with 2px offset (not outline:none anywhere).
+* Focus rings use box-shadow: 0 0 0 2px var(--bg-page), 0 0 0 4px var(--border-focus) to create a gap-effect that works on any background.
+* Modal dialogs: on open, focus moves to the first interactive element inside the modal. On close, focus returns to the trigger element.
+* Dropdown menus: arrow keys navigate between options. Type-to-filter on multi-selects. Home/End keys jump to first/last item.
+* The review queue keyboard shortcuts (A/R/E/←/→) only activate when the focus is within the review panel — not globally (to prevent conflicts with browser shortcuts and form inputs).
+* Skip navigation link: 'Skip to main content' is the first focusable element on every page, visible only on focus (opacity 0 → 1 on :focus). Links to the main landmark.
+
+
+9.3 ARIA Implementation Guide
+Component
+	Required ARIA
+	Sidebar navigation
+	role='navigation' aria-label='Main navigation'. Nav items: aria-current='page' for active item.
+	KPI Cards
+	role='region' aria-label='[metric name] statistics'. Value: aria-live='polite' for count-up animation (announces final value). Trend: aria-label='[metric] is [up/down] X% compared to yesterday'.
+	Review Queue list
+	role='listbox' aria-label='Pending review items'. Each item: role='option' aria-selected. Preview panel: role='main' aria-live='polite' (announces 'Showing item X of Y: [content type], [category]').
+	Status badges
+	aria-label='Status: [status name]' (not just visual colour — colour-blind accessible).
+	Charts
+	role='img' aria-label='[chart title]. [brief data description, e.g., Revenue increased 23% over the last 30 days]'. Table equivalent provided in a visually-hidden details element.
+	Progress bars
+	role='progressbar' aria-valuenow aria-valuemin='0' aria-valuemax='100' aria-label='[description]'.
+	Modals
+	role='dialog' aria-modal='true' aria-labelledby (pointing to modal heading). Focus trap active while open.
+	Toast notifications
+	role='status' aria-live='polite' for informational. role='alert' aria-live='assertive' for errors.
+	Loading skeletons
+	aria-busy='true' on the container. aria-label='Loading [content type]…'.
+	Countdown timers
+	aria-live='off' (do not announce every second). aria-label updated on each minute change only.
+	Toggle switches
+	role='switch' aria-checked='true/false' aria-label='[setting name]'.
+	________________
+
+
+10. Dark / Light Mode Implementation
+Dark mode is the primary theme for the admin surface. Light mode is the primary theme for the customer marketplace. Both surfaces support the opposite theme, with preferences saved per-user. System preference (prefers-color-scheme) is the default on first visit.
+
+
+10.1 Theme Architecture
+/* Root CSS Variables — Light Mode (default) */
+:root {
+  --bg-page:       #F9FAFB;
+  --bg-card:       #FFFFFF;
+  --text-primary:  #111827;
+  --border-default:#E5E7EB;
+  /* ... all 40 semantic tokens */
+}
+
+
+/* Dark Mode Override */
+:root[data-theme='dark'],
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg-page:       #0F0F1A;
+    --bg-card:       #161625;
+    --text-primary:  #F9FAFB;
+    --border-default:#312E81;
+    /* ... dark overrides for all 40 tokens */
+  }
+}
+
+
+10.2 Theme Toggle Interaction
+The theme toggle button (sun/moon icon in top bar and account settings) uses a morphing icon animation: the sun rays retract inward (stroke-width 2→0, 200ms) as the moon shape rotates in (rotate -90deg → 0, 250ms). The page background cross-fades between themes over 300ms using CSS transition on the :root variables. No flash on load — the script that reads and applies the saved theme preference runs in the <head> (before paint) to prevent flash.
+
+
+10.3 Admin Dark Mode Specific Treatments
+Element
+	Dark Mode Enhancement
+	Glassmorphic panels
+	Selected cards, modals, and tooltips use backdrop-filter: blur(12px) saturate(1.2) with bg-white/5 for glass effect. Light mode equivalent: box-shadow only (backdrop-filter not needed on white).
+	Brand gradient elements
+	Dark: gradient goes from brand-700 → accent (richer, more saturated). Light: gradient goes from brand-500 → brand-300 (softer, avoids harshness on white).
+	Data table rows
+	Dark: hover bg-surface-3 (barely perceptible lift). Light: hover bg-gray-50.
+	Input fields
+	Dark: bg-surface-2 with border-border. Light: bg-gray-50 with border-gray-200.
+	Charts
+	Dark: plot area bg-surface-1, grid lines at 0.1 opacity white. Light: white bg, grid lines at 0.1 opacity black.
+	Code/mono text
+	Dark: text-accent (cyan) on bg-surface-0. Light: text-brand-700 on bg-brand-50.
+	________________
+
+
+11. Handoff-Ready Specifications
+
+
+11.1 Component Measurement Reference
+Component
+	Height
+	H-Padding
+	V-Padding
+	Border Radius
+	Notes
+	Top navigation bar
+	56px
+	16px
+	0
+	0
+	Full-width, sticky, z-50
+	Sidebar (expanded)
+	100vh
+	0
+	8px
+	0
+	260px width, scrollable
+	Sidebar nav item
+	44px
+	16px
+	10px
+	8px
+	Active state: 3px left border
+	KPI card
+	120px
+	20px
+	20px
+	12px
+	Min-width 160px
+	Product card
+	auto
+	0
+	0
+	16px
+	Thumbnail aspect 16:9, content 16px p
+	Primary button (md)
+	40px
+	16px
+	0
+	6px
+	Min-width 80px
+	Primary button (lg)
+	48px
+	20px
+	0
+	8px
+	Min-width 100px
+	Input field (md)
+	40px
+	12px
+	0
+	6px
+	Label 14px above at -8px top when float
+	Modal dialog
+	auto
+	24px
+	24px
+	16px
+	Max-width 680px, max-height 80vh scroll
+	Toast notification
+	48px
+	16px
+	12px
+	8px
+	Max-width 420px, fixed bottom-right
+	Badge (default)
+	22px
+	8px
+	0
+	4px
+	Font-size 12px, font-weight 500
+	Badge (nav count)
+	18px
+	5px
+	0
+	9999px
+	Min-width 18px, text-xs
+	Table row (default)
+	52px
+	16px
+	0
+	0
+	Border-bottom 1px --border-default
+	Table row (dense)
+	40px
+	12px
+	0
+	0
+	For data-heavy admin screens
+	Avatar (sm)
+	24px
+	0
+	0
+	9999px
+	Circle, object-cover
+	Avatar (md)
+	32px
+	0
+	0
+	9999px
+	Circle, default size
+	Avatar (lg)
+	48px
+	0
+	0
+	9999px
+	Profile display
+	Dropdown item
+	36px
+	12px
+	0
+	6px
+	Hover bg-surface-3
+	Bottom sheet handle
+	4px
+	32px
+	8px
+	9999px
+	Centred, bg-border, above content
+	Skeleton shimmer width
+	varies
+	0
+	8px
+	4px
+	Background gradient animation 1.5s
+	
+
+11.2 Z-Index Scale
+Layer
+	Z-Index
+	Elements
+	Base
+	0
+	Page content, cards, standard elements
+	Elevated
+	10
+	Sticky table headers, sticky sidebar
+	Sticky UI
+	20
+	Top navigation bar, bottom tab bar
+	Dropdown
+	30
+	Select dropdowns, datepicker, autocomplete
+	Tooltip
+	40
+	All tooltip popovers
+	Drawer/Sheet
+	50
+	Slide-over drawers, bottom sheets
+	Modal Backdrop
+	60
+	Semi-opaque overlay behind modals
+	Modal Dialog
+	70
+	Modal content above backdrop
+	Toast
+	80
+	Toast notifications (above modal if needed)
+	Command Palette
+	90
+	Cmd+K search overlay
+	Critical Alert
+	100
+	System-level alerts (security, payment critical errors)
+	
+
+11.3 Icon System
+Icons use Lucide React (outline style, 1.5px stroke width, 24×24 default viewBox). All icons are SVG — no icon fonts. Sizes: 14px (xs, inline), 16px (sm, compact UI), 20px (md, default), 24px (lg, nav items), 32px (xl, feature icons), 48px (2xl, empty state illustrations). The icon stroke width scales proportionally: 1.25px at 14–16px, 1.5px at 20–24px, 2px at 32px+.
+Usage Context
+	Icon Size
+	Stroke Width
+	Colour
+	Inline with text (badge, label)
+	14–16px
+	1.25px
+	Inherits text colour
+	Form field suffix/prefix icon
+	16px
+	1.25px
+	--text-secondary
+	Button icon (left of text)
+	16px
+	1.5px
+	Inherits button text colour
+	Standalone icon button
+	20px
+	1.5px
+	--text-secondary, hover --text-primary
+	Sidebar navigation icons
+	20px
+	1.5px
+	--text-secondary, active --color-brand-500
+	Tab icons
+	20px
+	1.5px
+	Inherits tab text colour
+	KPI card icons
+	24px
+	1.5px
+	--color-brand-500
+	Empty state illustration icons
+	48–64px
+	1.5px
+	--color-brand-300
+	
+
+11.4 Tailwind CSS Class Mapping to Design Tokens
+The project uses Tailwind CSS with a custom theme configuration. The following maps design tokens to Tailwind utility classes used throughout the component library.
+// tailwind.config.ts (excerpt)
+theme: {
+  extend: {
+    colors: {
+      brand: {
+        50:  'var(--color-brand-50)',
+        100: 'var(--color-brand-100)',
+        300: 'var(--color-brand-300)',
+        500: 'var(--color-brand-500)',
+        700: 'var(--color-brand-700)',
+        900: 'var(--color-brand-900)',
+      },
+      accent:   'var(--color-accent)',
+      surface:  { 0: 'var(--color-surface-0)', 1: 'var(--color-surface-1)',
+                  2: 'var(--color-surface-2)', 3: 'var(--color-surface-3)' },
+      border:   'var(--border-default)',
+    },
+    fontFamily: {
+      sans: ['Inter var', 'Inter', 'system-ui', 'sans-serif'],
+      mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+    },
+    borderRadius: {
+      xs:  '2px', sm: '4px', md: '8px',
+      lg:  '12px', xl: '16px', '2xl': '24px',
+    },
+    animation: {
+      'shimmer': 'shimmer 1.5s linear infinite',
+      'pulse-dot': 'pulse-dot 2s ease-in-out infinite',
+      'count-badge': 'count-badge 0.35s cubic-bezier(0.34,1.56,0.64,1)',
+    },
+  }
+}
+________________
+
+
+12. Design Rationale — Why This Design Works
+The following explains the reasoning behind the most significant design decisions — not what was chosen, but why it will perform better commercially and operationally than the alternatives.
+
+
+12.1 Dark-First Admin Surface
+AI content operations run around the clock. Reviewers spending 4+ hours at a screen need a low-fatigue environment. Dark mode reduces luminance significantly which reduces the accommodative demand of the eye — this is clinically measurable. The deep violet-indigo palette was specifically chosen (not pure grey/black) because violet sits between warm and cool in the spectrum, avoiding the clinical coldness of blue-grey admin tools and the visual fatigue of warm-toned dark UIs. The brand glow effect (brand-coloured shadows on active elements) creates a neon-on-dark aesthetic that is simultaneously futuristic and premium without being garish.
+
+
+12.2 The Dual-Panel Review Interface
+The most critical bottleneck in the business model is the review throughput. The dual-panel design with keyboard shortcuts is not a nice-to-have — it is a commercial multiplier. A reviewer who uses keyboard shortcuts (A/R/→) can process an item in approximately 8 seconds versus 18 seconds using mouse-only interaction. With 200 items per day, this is a 33-minute saving per reviewer per day. The keyboard shortcut hints shown in the action bar are always visible (not hidden in a help modal) because help that requires a discovery step rarely gets used.
+
+
+12.3 The Counter Animation on First Load
+The count-up animation on dashboard KPI cards when the page first loads is not decoration. User research consistently shows that animated numbers are perceived as more credible than static numbers — the animation implies that the number was 'calculated' rather than simply retrieved. It also gives the user 800ms to orient themselves on the dashboard before processing the final values. This maps to how financial dashboards like Bloomberg Terminal handle heavy data loads — motion creates a sense of computation, and computation implies accuracy.
+
+
+12.4 Why the Marketplace Uses Light Mode
+Customer-facing e-commerce platforms that use dark-mode-primary have measurably lower conversion rates in A/B tests across most product categories. The reason is trust and price perception: light mode is associated with transparency and openness. Dark mode in commerce contexts is associated with luxury (like a dark boutique store) which works for very high-end products but raises the price expectation significantly. For a digital marketplace with products ranging from $4.99 to $49.99, the light mode creates a more approachable 'good value' perception. The brand violet accent on white is highly legible and creates strong purchase CTA contrast.
+
+
+12.5 The Sticky Purchase Panel
+The purchase panel on product detail pages becomes sticky on desktop and tablet because the decision to buy can happen at any point while reading about the product — after the description, after reading reviews, after examining the 'What's Included' section. A sticky panel means the purchase friction (scrolling back to top to click 'Buy') is eliminated at every decision point. On mobile, the sticky bottom bar serves the same function with even more emphasis — it is always visible, always one tap away.
+
+
+12.6 Variable Font Weight on KPI Values
+KPI card values use font-weight: 550 (mid-variable between 500 and 600) instead of standard 600 bold. This subtle difference makes the numbers feel precise and technical rather than brash and heavy. It is the visual equivalent of a Bloomberg data terminal versus a newspaper headline. Inter Variable's optical size axis also means that at the 30px display size used for KPI values, the letterforms are slightly wider and more legible than the standard 600-weight specimen would suggest.
+
+
+12.7 Confetti on Purchase Success
+Purchase success confetti is not a gimmick. It is a proven mechanism for creating a 'shareable moment' — users who experience genuine delight at purchase completion are measurably more likely to share their purchase on social media and return for future purchases. The confetti implementation is deliberately lightweight (canvas-based, 60 particles, 2-second lifetime) and gracefully omits itself when prefers-reduced-motion is set. It fires only once per order — repeat views of the success page do not trigger it.
+
+
+🎯  Implementation Priority Order
+Design tokens (Section 2.1–2.6) → Core components (Section 2.7) → Admin layout shell + navigation → Screen A2 (Dashboard) → Screen A4 (Review Queue, the highest business-value screen) → Customer marketplace shell → Screen C1 (Marketplace) → Screen C4 (Checkout) → All other screens in PRD order.
+	________________
+
+
+13. Complete Screen Inventory
+Screen ID
+	Name
+	Surface
+	Primary Route
+	Auth Required
+	Breakpoint Priority
+	A1
+	Login / 2FA
+	Admin
+	/auth/login, /auth/2fa
+	No
+	Desktop first
+	A2
+	Admin Dashboard
+	Admin
+	/admin/dashboard
+	Admin+
+	Desktop first
+	A3
+	AI Generator Panel
+	Admin
+	/admin/generator
+	Admin+
+	Desktop first
+	A4
+	Review Queue
+	Admin
+	/admin/review
+	Reviewer+
+	Desktop first
+	A5
+	Content Library
+	Admin
+	/admin/library
+	Reviewer+
+	Desktop first
+	A6
+	Product Builder
+	Admin
+	/admin/product-builder
+	Admin+
+	Desktop first
+	A7
+	Bundle Builder
+	Admin
+	/admin/bundles
+	Admin+
+	Desktop first
+	A8
+	Orders (Admin)
+	Admin
+	/admin/orders
+	Admin+
+	Desktop first
+	A9
+	Analytics & Revenue
+	Admin
+	/admin/analytics
+	Admin+
+	Desktop first
+	A10
+	Trend Intelligence
+	Admin
+	/admin/trends
+	Admin+
+	Desktop first
+	A11
+	Coupon Manager
+	Admin
+	/admin/coupons
+	Admin+
+	Desktop first
+	A12
+	Affiliate Manager
+	Admin
+	/admin/affiliates
+	Admin+
+	Desktop first
+	A13
+	Automation Intelligence
+	Admin
+	/admin/automation
+	Admin+
+	Desktop first
+	A14
+	System Health Monitor
+	Admin
+	/admin/system
+	Super Admin
+	Desktop first
+	A15
+	Audit Log Viewer
+	Admin
+	/admin/audit-logs
+	Super Admin
+	Desktop first
+	A16
+	Notification Broadcast
+	Admin
+	/admin/notifications/broadcast
+	Admin+
+	Desktop first
+	A17
+	Settings
+	Admin
+	/admin/settings
+	Admin+
+	Desktop first
+	C1
+	Marketplace Listing
+	Customer
+	/marketplace
+	No
+	Mobile first
+	C2
+	Product Detail
+	Customer
+	/marketplace/:slug
+	No
+	Mobile first
+	C3
+	Search Results
+	Customer
+	/search
+	No
+	Mobile first
+	C4
+	Checkout
+	Customer
+	/checkout
+	JWT
+	Mobile first
+	C5
+	Order Success
+	Customer
+	/orders/:id/success
+	JWT
+	Mobile first
+	C6
+	Account Portal (all sub-pages)
+	Customer
+	/account/*
+	JWT
+	Mobile first
+	C7
+	Affiliate Portal
+	Customer
+	/account/affiliate
+	JWT (affiliate)
+	Mobile first
+	C8
+	Notification Center
+	Customer
+	/notifications
+	JWT
+	Mobile first
+	C9
+	Affiliate Landing Page
+	Customer
+	/affiliates
+	No
+	Mobile first
+	C10
+	Community Request Board
+	Customer
+	/community/requests
+	No (post=JWT)
+	Mobile first
+	SH
+	Shared — 404 Page
+	Both
+	/404
+	No
+	Responsive
+	SH2
+	Shared — Maintenance Mode
+	Both
+	/maintenance
+	No
+	Responsive
+	
+
+© 2026 AI Content Factory  —  UI/UX Design PRD  —  Confidential  —  Premium 2026 Design System
